@@ -1,0 +1,24 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [".venv", "release"]
+
+[tool.ruff.lint]
+select = ["B", "DTZ", "E", "F", "FURB", "I", "PIE", "RUF", "SIM", "UP"]
+ignore = [
+    # Long localized copy is easier to review as complete sentences.
+    "E501",
+    # Vietnamese/Korean typography intentionally uses Unicode punctuation.
+    "RUF001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# FastAPI uses Query/Depends calls as part of its public route declaration API.
+"app/api/main.py" = ["B008"]
+# Each download is isolated so one broken source does not abort the whole batch.
+"scripts/sync_real_place_images.py" = ["BLE001", "E402"]
+# Tests set environment variables before importing the application by design.
+"tests/test_acceptance.py" = ["E402"]
+
+[tool.ruff.format]
+line-ending = "cr-lf"

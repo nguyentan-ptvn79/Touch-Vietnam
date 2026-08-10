@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-shell">
+    <article class="auth-card">
+        <span class="eyebrow">{{ error_code }}</span>
+        <h1>{{ error_title }}</h1>
+        <p>{{ error_body }}</p>
+        <div class="inline-actions">
+            <a class="button primary" href="{{ url_for('home') }}">{{ t('nav_home') }}</a>
+            <a class="button secondary" href="{{ url_for('places') }}">{{ t('nav_places') }}</a>
+        </div>
+    </article>
+</section>
+{% endblock %}

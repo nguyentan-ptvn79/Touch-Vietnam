@@ -1,0 +1,9 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_top_places_label') }}</span>
+    <h3>{{ t('dashboard_top_places_title') }}</h3>
+    <ul class="mini-list">
+        {% for place_name in summary.top_places %}
+            <li>{{ place_name }}</li>
+        {% endfor %}
+    </ul>
+</article>

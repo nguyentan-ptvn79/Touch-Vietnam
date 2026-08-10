@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="about-product-page">
+    <section class="about-hero" aria-labelledby="about-title">
+        <div class="about-hero-copy">
+            <span class="eyebrow">{{ t('about_eyebrow') }}</span>
+            <h1 id="about-title">{{ t('about_title') }}</h1>
+            <p>{{ t('about_intro') }}</p>
+            <div class="about-hero-actions">
+                <a class="button primary" href="{{ url_for('places') }}">{{ t('home_cta_places') }}</a>
+                <a class="button secondary" href="{{ url_for('planner') }}">{{ t('nav_planner') }}</a>
+            </div>
+        </div>
+
+        <div class="about-hero-visual">
+            <div class="about-photo-frame">
+                <img
+                    src="{{ url_for('static', filename=site_media.hero.path) }}?v={{ app_meta.app_version }}"
+                    alt="{{ t('about_image_alt') }}"
+                    loading="eager"
+                    fetchpriority="high"
+                >
+                <span class="about-photo-shade" aria-hidden="true"></span>
+            </div>
+            <div class="about-brand-badge">
+                <img
+                    src="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}"
+                    alt=""
+                    aria-hidden="true"
+                >
+                <div>
+                    <span>{{ t('about_badge') }}</span>
+                    <strong>{{ t('about_badge_detail') }}</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <dl class="about-stats" aria-label="{{ t('about_stats_aria') }}">
+        <div>
+            <dt>{{ t('about_stat_places_value') }}</dt>
+            <dd>{{ t('about_stat_places_label') }}</dd>
+        </div>
+        <div>
+            <dt>{{ t('about_stat_transport_value') }}</dt>
+            <dd>{{ t('about_stat_transport_label') }}</dd>
+        </div>
+        <div>
+            <dt>{{ t('about_stat_languages_value') }}</dt>
+            <dd>{{ t('about_stat_languages_label') }}</dd>
+        </div>
+    </dl>
+
+    <section class="about-story" aria-labelledby="about-story-title">
+        <aside class="about-mission-card">
+            <span class="about-section-number">01</span>
+            <span class="eyebrow eyebrow-light">{{ t('about_mission_label') }}</span>
+            <h2>{{ t('about_mission_title') }}</h2>
+            <p>{{ t('about_mission_body') }}</p>
+            <img
+                src="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}"
+                alt=""
+                aria-hidden="true"
+            >
+        </aside>
+
+        <div class="about-story-copy">
+            <span class="eyebrow">{{ t('about_story_eyebrow') }}</span>
+            <h2 id="about-story-title">{{ t('about_story_title') }}</h2>
+            <p>{{ t('about_story_body') }}</p>
+            <div class="about-story-highlight">
+                <span aria-hidden="true">“</span>
+                <strong>{{ t('about_story_quote') }}</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-values" aria-labelledby="about-values-title">
+        <header class="about-section-heading">
+            <div>
+                <span class="eyebrow">{{ t('about_values_eyebrow') }}</span>
+                <h2 id="about-values-title">{{ t('about_values_title') }}</h2>
+            </div>
+            <p>{{ t('about_values_intro') }}</p>
+        </header>
+
+        <div class="about-value-grid">
+            <article class="about-value-card">
+                <div class="about-value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11Z"></path>
+                        <circle cx="12" cy="10" r="2.4"></circle>
+                    </svg>
+                </div>
+                <span>01</span>
+                <h3>{{ t('about_value_discover_title') }}</h3>
+                <p>{{ t('about_value_discover_body') }}</p>
+            </article>
+
+            <article class="about-value-card">
+                <div class="about-value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19V8l5-3 6 3 5-3v11l-5 3-6-3-5 3Z"></path>
+                        <path d="M9 5v11M15 8v11"></path>
+                    </svg>
+                </div>
+                <span>02</span>
+                <h3>{{ t('about_value_plan_title') }}</h3>
+                <p>{{ t('about_value_plan_body') }}</p>
+            </article>
+
+            <article class="about-value-card">
+                <div class="about-value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="m12 3 7 3v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6l7-3Z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                </div>
+                <span>03</span>
+                <h3>{{ t('about_value_trust_title') }}</h3>
+                <p>{{ t('about_value_trust_body') }}</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="about-cta" aria-labelledby="about-cta-title">
+        <div>
+            <span class="eyebrow eyebrow-light">{{ t('about_cta_eyebrow') }}</span>
+            <h2 id="about-cta-title">{{ t('about_cta_title') }}</h2>
+            <p>{{ t('about_cta_body') }}</p>
+        </div>
+        <div class="about-cta-actions">
+            <a class="button about-cta-primary" href="{{ url_for('planner') }}">{{ t('about_cta_primary') }}</a>
+            <a class="button about-cta-secondary" href="{{ url_for('places') }}">{{ t('about_cta_secondary') }}</a>
+        </div>
+    </section>
+</section>
+{% endblock %}

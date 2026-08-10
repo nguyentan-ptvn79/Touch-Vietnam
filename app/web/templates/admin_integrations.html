@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-page admin-workspace">
+    <div class="page-intro">
+        <span class="eyebrow">API</span>
+        <h1>Trung tâm kết nối API</h1>
+        <p>Trang này hiển thị các cổng chờ để nối API thật cho vé, analytics, AR, bản đồ offline và các dịch vụ runtime.</p>
+    </div>
+
+    <section class="summary-grid">
+        <article class="metric-card">
+            <span>Tổng kết nối</span>
+            <strong>{{ integration_summary.total }}</strong>
+            <small>Tất cả đầu nối đang khai báo</small>
+        </article>
+        <article class="metric-card">
+            <span>Sẵn sàng</span>
+            <strong>{{ integration_summary.ready }}</strong>
+            <small>Đã có cấu hình API ngoài</small>
+        </article>
+        <article class="metric-card">
+            <span>Chờ cấu hình</span>
+            <strong>{{ integration_summary.waiting }}</strong>
+            <small>Cần điền base URL hoặc API key</small>
+        </article>
+        <article class="metric-card">
+            <span>Đang chạy</span>
+            <strong>{{ integration_summary.active + integration_summary.fallback }}</strong>
+            <small>Đang dùng live built-in hoặc fallback nội bộ</small>
+        </article>
+    </section>
+
+    <section class="feature-grid integration-grid">
+        {% for item in integrations %}
+            <article class="feature-card integration-card">
+                <span class="card-label">{{ item.category }}</span>
+                <div>
+                    <h3>{{ item.label }}</h3>
+                    <p>{{ item.note }}</p>
+                </div>
+                <div class="stack-list compact-stack">
+                    <div class="stack-row">
+                        <strong>Trạng thái</strong>
+                        <span class="pill">{{ item.status_label }}</span>
+                    </div>
+                    <div class="stack-row">
+                        <strong>Chế độ</strong>
+                        <span>{{ item.mode }}</span>
+                    </div>
+                    <div class="stack-row">
+                        <strong>Luồng tính năng</strong>
+                        <span>{{ item.feature_route }}</span>
+                    </div>
+                    <div class="stack-row">
+                        <strong>Đường dẫn đầu nối</strong>
+                        <span>{{ item.connector_path }}</span>
+                    </div>
+                    {% if item.health_url %}
+                        <div class="stack-row">
+                            <strong>Kiểm tra kết nối</strong>
+                            <a href="{{ url_for('integration_probe_api', integration_key=item.key) }}" target="_blank" rel="noopener noreferrer">Mở probe JSON</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_expense_label') }}</span>
+    <h3>{{ t('dashboard_expense_title') }}</h3>
+    <div class="summary-strip">
+        <div>
+            <span>{{ t('dashboard_expense_total') }}</span>
+            <strong>{{ expense_summary.total|currency }}</strong>
+        </div>
+        <div>
+            <span>{{ t('dashboard_expense_items') }}</span>
+            <strong>{{ expense_summary.count }}</strong>
+        </div>
+        <div>
+            <span>{{ t('dashboard_saved_trips_label') }}</span>
+            <strong>{{ expense_summary.saved_trip_count }}</strong>
+        </div>
+    </div>
+    {% if recent_expenses %}
+        <div class="stack-list compact-list">
+            {% for item in recent_expenses %}
+                <div class="stack-row">
+                    <div>
+                        <strong>{{ item.title }}</strong>
+                        <p>{{ item.paid_by }} &bull; {{ item.category_label }}</p>
+                        <time class="meta-line" datetime="{{ item.created_at|iso_datetime }}" data-relative-time>{{ item.created_at|datetime_local }}</time>
+                    </div>
+                    <strong>{{ item.amount|currency }}</strong>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>{{ t('dashboard_expense_empty') }}</p>
+    {% endif %}
+    <div class="inline-actions">
+        <a class="button secondary" href="{{ url_for('expenses') }}">{{ t('dashboard_open_expenses') }}</a>
+    </div>
+</article>

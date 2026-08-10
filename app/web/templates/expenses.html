@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+{% if saved_trips %}
+    <section class="two-column expenses-page expenses-workspace">
+        <article class="glass-card expense-form-card">
+            <span class="card-label">{{ t('expenses_eyebrow') }}</span>
+            <h3>{{ t('expenses_title') }}</h3>
+            <form class="auth-form" method="post">
+                <div class="form-field">
+                    <label for="trip_id">{{ t('expenses_trip_label') }}</label>
+                    <select id="trip_id" name="trip_id">
+                        {% for trip in saved_trips %}
+                            <option value="{{ trip.id }}" {{ 'selected' if selected_trip_id == (trip.id|string) else '' }}>{{ trip.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="title">{{ t('expenses_title_label') }}</label>
+                    <input id="title" name="title" placeholder="{{ t('expenses_title_placeholder') }}" required>
+                </div>
+                <div class="form-field">
+                    <label for="paid_by">{{ t('expenses_paid_by') }}</label>
+                    <input id="paid_by" name="paid_by" value="{{ logged_in_user or '' }}" placeholder="{{ t('expenses_paid_by_placeholder') }}" required>
+                </div>
+                <div class="form-field">
+                    <label for="split_members">{{ t('expenses_split_members') }}</label>
+                    <input id="split_members" name="split_members" value="{{ logged_in_user or '' }}" placeholder="{{ t('expenses_split_members_placeholder') }}" required>
+                    <small>{{ t('expenses_split_members_hint') }}</small>
+                </div>
+                <div class="form-field">
+                    <label for="category">{{ t('expenses_category') }}</label>
+                    <select id="category" name="category">
+                        {% for item in category_options %}
+                            <option value="{{ item.code }}">{{ item.label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="amount">{{ t('expenses_amount') }}</label>
+                    <input id="amount" name="amount" type="number" min="0" step="1000" placeholder="250000" required>
+                    <small>{{ t('expenses_amount_hint') }}</small>
+                </div>
+                <div class="form-field">
+                    <label for="note">{{ t('expenses_note') }}</label>
+                    <textarea id="note" name="note" placeholder="{{ t('expenses_note_placeholder') }}"></textarea>
+                </div>
+                <button class="button primary" type="submit">{{ t('expenses_submit') }}</button>
+            </form>
+        </article>
+
+        <article class="glass-card expense-summary-card">
+            <span class="card-label">{{ t('expenses_summary_title') }}</span>
+            <h3>{{ selected_trip.title if selected_trip else t('expenses_title') }}</h3>
+            <div class="summary-strip">
+                <div>
+                    <span>{{ t('dashboard_expense_total') }}</span>
+                    <strong>{{ expense_summary.total|currency }}</strong>
+                </div>
+                <div>
+                    <span>{{ t('dashboard_expense_items') }}</span>
+                    <strong>{{ expense_summary.count }}</strong>
+                </div>
+                <div>
+                    <span>{{ t('dashboard_saved_trips_label') }}</span>
+                    <strong>{{ expense_summary.saved_trip_count }}</strong>
+                </div>
+            </div>
+            {% if expense_summary.by_payer %}
+                <h4>{{ t('expenses_by_payer_title') }}</h4>
+                <div class="stack-list compact-list">
+                    {% for row in expense_summary.by_payer %}
+                        <div class="stack-row">
+                            <strong>{{ row.name }}</strong>
+                            <strong>{{ row.amount|currency }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <h4>{{ t('expenses_settlement_title') }}</h4>
+            {% if expense_summary.settlements %}
+                <div class="stack-list compact-list">
+                    {% for row in expense_summary.settlements %}
+                        <div class="stack-row">
+                            <strong>{{ row.from_name }} &rarr; {{ row.to_name }}</strong>
+                            <strong>{{ row.amount|currency }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>{{ t('expenses_settlement_empty') }}</p>
+            {% endif %}
+        </article>
+    </section>
+
+    <section class="section-block expenses-page">
+        <div class="section-heading">
+            <span class="eyebrow">{{ t('expenses_recent_title') }}</span>
+            <h2>{{ t('dashboard_expense_title') }}</h2>
+        </div>
+        {% if expense_items %}
+            <div class="stack-list">
+                {% for item in expense_items %}
+                    <article class="glass-card expense-row">
+                        <div class="stack-row">
+                            <div>
+                                <strong>{{ item.title }}</strong>
+                                <p>{{ item.paid_by }} &bull; {{ item.category_label }}</p>
+                                <p>{{ t('expenses_participants') }}: {{ item.split_members|join(', ') }}</p>
+                                {% if item.note %}
+                                    <p>{{ item.note }}</p>
+                                {% endif %}
+                                <time class="meta-line" datetime="{{ item.created_at|iso_datetime }}" data-relative-time>{{ item.created_at|datetime_local }}</time>
+                            </div>
+                            <strong>{{ item.amount|currency }}</strong>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <article class="empty-card">
+                <span class="eyebrow">{{ t('expenses_recent_title') }}</span>
+                <h3>{{ t('expenses_empty_title') }}</h3>
+                <p>{{ t('expenses_empty') }}</p>
+            </article>
+        {% endif %}
+    </section>
+{% else %}
+    <section class="section-block expenses-page">
+        <article class="empty-card">
+            <span class="eyebrow">{{ t('expenses_eyebrow') }}</span>
+            <h3>{{ t('expenses_no_trips') }}</h3>
+            <a class="button secondary" href="{{ url_for('planner') }}">{{ t('nav_planner') }}</a>
+        </article>
+    </section>
+{% endif %}
+{% endblock %}

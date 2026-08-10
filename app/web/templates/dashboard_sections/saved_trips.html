@@ -1,0 +1,23 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_saved_trips_label') }}</span>
+    <h3>{{ t('dashboard_saved_trips_title') }}</h3>
+    {% if saved_trips %}
+        <div class="stack-list">
+            {% for trip in saved_trips[:4] %}
+                <div class="stack-row stack-row-card">
+                    <div>
+                        <strong>{{ trip.title }}</strong>
+                        <p>{{ t('dashboard_saved_trip_days', days=trip.days) }} &bull; {{ t('dashboard_saved_trip_budget') }}: {{ trip.budget_total|currency }}</p>
+                        <time class="meta-line" datetime="{{ trip.created_at|iso_datetime }}" data-relative-time>{{ trip.created_at|datetime_local }}</time>
+                    </div>
+                    <div class="mini-actions">
+                        <a class="text-link" href="{{ url_for('expenses', trip_id=trip.id) }}">{{ t('dashboard_open_expenses') }}</a>
+                        <a class="text-link" href="{{ url_for('tickets', origin=trip.departure_city, destination=trip.destination) }}">{{ t('dashboard_open_tickets') }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>{{ t('dashboard_saved_trips_empty') }}</p>
+    {% endif %}
+</article>

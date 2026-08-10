@@ -1,0 +1,7 @@
+{% for metric in summary.metrics %}
+    <article class="metric-card">
+        <span>{{ metric.name }}</span>
+        <strong>{{ metric.value }}</strong>
+        <small>{{ metric.trend }}</small>
+    </article>
+{% endfor %}

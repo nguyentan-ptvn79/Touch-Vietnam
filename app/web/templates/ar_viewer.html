@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+{% set title_name = ar_place.name if ar_place else ar_landmark.name %}
+<section class="section-block compact">
+    <div class="section-heading">
+        <span class="eyebrow">{{ t('mapar_landmark_label') }}</span>
+        <h1>{{ runtime_ui.ar_viewer_title.format(place=title_name) }}</h1>
+        <p>{{ runtime_ui.ar_viewer_intro }}</p>
+    </div>
+</section>
+
+<section
+    class="two-column detail-layout ar-viewer-layout"
+    data-ar-viewer
+    data-idle-text="{{ runtime_ui.ar_status_idle }}"
+    data-active-text="{{ runtime_ui.ar_status_active }}"
+    data-error-text="{{ runtime_ui.ar_status_error }}"
+>
+    <article class="glass-card qr-scanner-card">
+        <span class="card-label">{{ runtime_ui.ar_camera_label }}</span>
+        <h3>{{ title_name }}</h3>
+        <div class="qr-video-shell ar-video-shell">
+            <video class="qr-video" data-ar-video playsinline muted></video>
+            <div class="ar-overlay-frame" aria-hidden="true">
+                <div class="ar-ripple"></div>
+                <div class="ar-ripple ar-ripple-delay"></div>
+                <div class="ar-target-label">{{ title_name }}</div>
+            </div>
+        </div>
+        <p class="chat-status" data-ar-status>{{ runtime_ui.ar_status_idle }}</p>
+        <div class="inline-actions">
+            <button class="button primary" type="button" data-ar-start>{{ runtime_ui.ar_open_camera }}</button>
+            <button class="button secondary" type="button" data-ar-stop>{{ runtime_ui.ar_stop_camera }}</button>
+        </div>
+    </article>
+
+    <article class="glass-card">
+        <span class="card-label">{{ runtime_ui.ar_info_label }}</span>
+        <h3>{{ title_name }}</h3>
+        {% if ar_place %}
+            <p>{{ ar_place.description }}</p>
+            <ul class="mini-list">
+                {% for highlight in ar_place.highlights %}
+                    <li>{{ highlight }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if ar_landmark %}
+            <p>{{ ar_landmark.note }}</p>
+        {% endif %}
+        {% if weather %}
+            <div class="place-weather qr-result-weather">
+                <div class="place-weather-top">
+                    <strong>{{ weather.temperature_c }}&deg;C</strong>
+                    <span>{{ weather.condition }}</span>
+                </div>
+                <p>{{ weather.advice }}</p>
+            </div>
+        {% endif %}
+        {% if nearby_services %}
+            <div class="stack-list">
+                {% for item in nearby_services %}
+                    <div class="stack-row">
+                        <strong>{{ item.name }}</strong>
+                        <span>{{ item.distance_km }} km</span>
+                        <p>{{ item.note }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="inline-actions">
+            {% if ar_place %}
+                <a class="button secondary" href="{{ url_for('place_detail', place_id=ar_place.id) }}">{{ t('places_view_detail') }}</a>
+            {% endif %}
+            {% if map_view_url %}
+                <a class="button secondary" href="{{ map_view_url }}" target="_blank" rel="noopener noreferrer">{{ t('places_map_open') }}</a>
+            {% endif %}
+            {% if qr_image_url %}
+                <a class="text-link" href="{{ qr_image_url }}" target="_blank" rel="noopener noreferrer">{{ t('qr_open_image') }}</a>
+            {% endif %}
+        </div>
+    </article>
+</section>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/ar-viewer.js') }}?v={{ app_meta.app_version }}"></script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-shell">
+    <article class="auth-card">
+        <span class="eyebrow">{{ t('login_eyebrow') }}</span>
+        <h1>{{ t('login_title') }}</h1>
+
+        <form method="post" class="auth-form">
+            <div class="form-field">
+                <label for="email">{{ t('form_email') }}</label>
+                <input id="email" name="email" type="email" required>
+            </div>
+            <div class="form-field">
+                <label for="password">{{ t('form_password') }}</label>
+                <input id="password" name="password" type="password" maxlength="128" autocomplete="current-password" required>
+            </div>
+            <button class="button primary" type="submit">{{ t('login_submit') }}</button>
+        </form>
+
+        <p>{{ t('login_no_account') }} <a href="{{ url_for('register') }}">{{ t('login_register_link') }}</a></p>
+    </article>
+</section>
+{% endblock %}

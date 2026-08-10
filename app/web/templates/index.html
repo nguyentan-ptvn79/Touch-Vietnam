@@ -1,0 +1,224 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<section class="hero-vietnam hero-vietnam-v2">
+    <div class="hero-copy">
+        <span class="eyebrow">{{ t('home_eyebrow') }}</span>
+        <h1 class="hero-title">
+            <span class="hero-title-gold">{{ t('home_title_gold') }}</span>
+            <span class="hero-title-green">{{ t('home_title_green') }}</span>
+        </h1>
+        <p class="hero-subtitle">{{ t('home_intro') }}</p>
+        <div class="hero-action-row">
+            <a href="{{ url_for('places') }}" class="button primary">{{ t('home_cta_places') }}</a>
+            <a href="{{ url_for('planner') }}" class="button secondary">{{ t('home_cta_planner') }}</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <img
+            src="{{ url_for('static', filename=site_media.hero.path) }}?v={{ app_meta.app_version }}"
+            alt="{{ t('hero_scene_alt') }}"
+            class="hero-scene-image"
+            loading="eager"
+        >
+        <div class="hero-visual-surface"></div>
+        <img
+            src="{{ url_for('static', filename='img/vietnam-hero.svg') }}"
+            alt="{{ t('hero_map_alt') }}"
+            class="hero-map-image"
+        >
+    </div>
+
+</section>
+
+<section class="showcase-layout">
+    <div class="showcase-board">
+        <div class="section-bar">
+            <div class="section-bar-title">
+                <img
+                    src="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}"
+                    alt="{{ t('brand_logo_alt') }}"
+                    class="section-icon"
+                    loading="lazy"
+                >
+                <h2>{{ t('home_featured_title') }}</h2>
+            </div>
+            <a href="{{ url_for('places') }}" class="section-link">{{ t('home_featured_view_all') }}</a>
+        </div>
+
+        <div class="showcase-grid">
+            {% for place in featured_places[:3] %}
+                <article class="destination-card">
+                    <div class="destination-media">
+                        <img src="{{ url_for('static', filename=place_image_asset(place.id)) }}" alt="{{ place.name }}" loading="lazy">
+                        <a class="place-card-qr home-card-qr" href="{{ url_for('place_detail', place_id=place.id) }}" aria-label="{{ t('qr_place_title') }}">
+                            <img src="{{ url_for('place_qr_image', place_id=place.id) }}" alt="{{ t('qr_image_alt', place=place.name) }}" loading="lazy">
+                        </a>
+                        <span class="destination-badge">{{ place.must_go_score }}/100</span>
+                    </div>
+                    <div class="destination-body">
+                        <div class="destination-heading">
+                            <div>
+                                <h3>{{ place.name }}</h3>
+                                <p class="destination-location">
+                                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                                        <path d="M12 21s7-5.1 7-12a7 7 0 1 0-14 0c0 6.9 7 12 7 12Z"></path>
+                                        <circle cx="12" cy="9" r="2.4"></circle>
+                                    </svg>
+                                    <span>{{ place.province }}</span>
+                                </p>
+                            </div>
+                            <span class="destination-rating" title="{{ t('place_detail_rating') }} {{ place.rating }}/5">
+                                <svg aria-hidden="true" viewBox="0 0 24 24">
+                                    <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"></path>
+                                </svg>
+                                {{ place.rating }}
+                            </span>
+                        </div>
+
+                        <div class="destination-category-row" aria-label="{{ t('place_detail_categories') }}">
+                            {% for category in place.categories[:2] %}
+                                <span>{{ category_labels.get(category, category) }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <a href="{{ url_for('place_detail', place_id=place.id) }}" class="destination-link">
+                            <span>{{ t('home_cta_places') }}</span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M5 12h14M13 6l6 6-6 6"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+
+    <aside class="weather-widget" aria-labelledby="weather-widget-title">
+        <span class="eyebrow">{{ t('home_weather_today') }}</span>
+        <form class="weather-location-form" method="get" action="{{ url_for('home') }}">
+            <label for="weather-place-id">{{ t('home_weather_track_label') }}</label>
+            <div class="weather-location-controls">
+                <select id="weather-place-id" name="weather_place_id">
+                    {% for place in weather_places %}
+                        <option value="{{ place.id }}" {{ 'selected' if place.id == selected_weather_place_id else '' }}>
+                            {{ place.name }} - {{ place.province }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="button weather-track-button">{{ t('home_weather_track_submit') }}</button>
+            </div>
+        </form>
+
+        {% if weather_forecast %}
+            <p class="weather-location" id="weather-widget-title">{{ weather_forecast.destination }}</p>
+            <div class="weather-primary">
+                <div class="weather-icon" aria-hidden="true">
+                    <span class="weather-sun"></span>
+                    <span class="weather-cloud"></span>
+                </div>
+                <div class="weather-reading">
+                    <strong>{{ weather_forecast.temperature_c }}<small>°C</small></strong>
+                    <span>{{ weather_forecast.condition }}</span>
+                    <p>{{ weather_forecast.advice }}</p>
+                </div>
+            </div>
+
+            <div class="weather-stats">
+                <div>
+                    <span>{{ t('home_weather_high') }}</span>
+                    <strong>{{ weather_forecast.temperature_high_c if weather_forecast.temperature_high_c is not none else '-' }}{% if weather_forecast.temperature_high_c is not none %}<small>°C</small>{% endif %}</strong>
+                </div>
+                <div>
+                    <span>{{ t('home_weather_low') }}</span>
+                    <strong>{{ weather_forecast.temperature_low_c if weather_forecast.temperature_low_c is not none else '-' }}{% if weather_forecast.temperature_low_c is not none %}<small>°C</small>{% endif %}</strong>
+                </div>
+                <div>
+                    <span>{{ t('home_weather_wind') }}</span>
+                    <strong>{{ weather_forecast.wind_speed_kmh|round(0)|int if weather_forecast.wind_speed_kmh is not none else '-' }}{% if weather_forecast.wind_speed_kmh is not none %}<small> km/h</small>{% endif %}</strong>
+                </div>
+            </div>
+            {% if weather_forecast.source %}
+                <p class="weather-source">{{ weather_forecast.source }}</p>
+            {% endif %}
+        {% else %}
+            <p class="weather-unavailable" id="weather-widget-title">{{ t('home_weather_unavailable') }}</p>
+        {% endif %}
+    </aside>
+</section>
+
+<section class="ticket-strip">
+    <div class="ticket-strip-title">
+        <img
+            src="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}"
+            alt="{{ t('brand_logo_alt') }}"
+            class="ticket-strip-icon"
+            loading="lazy"
+        >
+        <div>
+            <span class="ticket-strip-eyebrow">Tra cứu di chuyển</span>
+            <strong>{{ t('home_ticket_strip_title') }}</strong>
+            <p>{{ t('home_ticket_strip_desc') }}</p>
+        </div>
+    </div>
+
+    <form action="{{ url_for('tickets') }}" method="get" class="ticket-strip-form ticket-search-form">
+        <label class="ticket-field">
+            <span>{{ t('tickets_origin') }}</span>
+            <input type="text" name="origin" value="{{ t('default_departure_city') }}" autocomplete="address-level2" required>
+        </label>
+        <label class="ticket-field">
+            <span>{{ t('tickets_destination') }}</span>
+            <input type="text" name="destination" value="{{ t('default_destination_city') }}" autocomplete="address-level2" required>
+        </label>
+        <label class="ticket-field">
+            <span>{{ t('tickets_vehicle') }}</span>
+            <select name="vehicle_type">
+                {% if vehicle_options is defined %}
+                    {% for option in vehicle_options %}
+                        <option value="{{ option.code }}">{{ option.label }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="plane">{{ t('transport_plane') }}</option>
+                    <option value="train">{{ t('transport_train') }}</option>
+                    <option value="bus">{{ t('transport_bus') }}</option>
+                    <option value="entertainment">{{ t('tickets_vehicle_entertainment') }}</option>
+                {% endif %}
+            </select>
+        </label>
+        <label class="ticket-field">
+            <span>{{ t('tickets_departure_date') }}</span>
+            <input type="date" name="departure_date" value="{{ current_time_iso[:10] }}" min="{{ current_time_iso[:10] }}">
+        </label>
+        <label class="ticket-field compact-ticket-field">
+            <span>{{ t('tickets_passengers') }}</span>
+            <input type="number" name="passengers" value="1" min="1" max="20">
+        </label>
+        <button type="submit" class="button ticket-submit">{{ t('tickets_search') }}</button>
+    </form>
+
+    <div class="transport-info-grid">
+        <article>
+            <span>{{ t('transport_plane') }}</span>
+            <strong>{{ t('home_transport_plane_title') }}</strong>
+            <small>{{ t('home_transport_plane_body') }}</small>
+        </article>
+        <article>
+            <span>{{ t('transport_train') }}</span>
+            <strong>{{ t('home_transport_train_title') }}</strong>
+            <small>{{ t('home_transport_train_body') }}</small>
+        </article>
+        <article>
+            <span>{{ t('transport_bus') }}</span>
+            <strong>{{ t('home_transport_bus_title') }}</strong>
+            <small>{{ t('home_transport_bus_body') }}</small>
+        </article>
+        <article>
+            <span>{{ t('tickets_vehicle_entertainment') }}</span>
+            <strong>{{ t('home_transport_attraction_title') }}</strong>
+            <small>{{ t('home_transport_attraction_body') }}</small>
+        </article>
+    </div>
+</section>
+
+{% endblock %}

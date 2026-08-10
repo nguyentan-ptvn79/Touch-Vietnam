@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>Đề cương chi tiết - Touch VN</title>
+  <style>
+    @page { size: A4; margin: 10mm 12mm 12mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #111; background: #fff; font-family: "Times New Roman", serif; font-size: 11.7pt; line-height: 1.34; }
+    .page { break-after: page; page-break-after: always; min-height: 268mm; padding: 5mm 6mm; border: 1.2px solid #222; }
+    .page:last-child { break-after: auto; page-break-after: auto; }
+    h1, h2, h3, h4, p { margin-top: 0; }
+    h1 { margin: 6mm 0 5mm; text-align: center; font-size: 19pt; text-transform: uppercase; }
+    h2 { margin: 3.5mm 0 2mm; font-size: 15pt; }
+    h3 { margin: 3mm 0 1.5mm; font-size: 13.2pt; }
+    h4 { margin: 2mm 0 1mm; font-size: 12pt; }
+    p { margin-bottom: 2mm; text-align: justify; text-indent: 8mm; }
+    p.no-indent, .no-indent p, td p { text-indent: 0; }
+    .institution { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; text-align: center; font-weight: 700; font-size: 12.5pt; }
+    .institution span { display: block; margin-bottom: 1mm; }
+    .institution .normal { font-weight: 400; }
+    .topic-box { border: 1.4px solid #222; padding: 3.5mm 5mm; margin-top: 5mm; }
+    .topic-box ul { margin: 2mm 0 0 7mm; }
+    .topic-box li { margin-bottom: 2mm; text-align: justify; }
+    .meta { width: 100%; border-collapse: collapse; margin: 0; }
+    .meta td { border: 1.2px solid #222; padding: 1.8mm 2.5mm; vertical-align: top; }
+    .label { font-weight: 700; }
+    .placeholder { color: #9b2f2f; font-weight: 700; }
+    ul, ol { margin: 1.5mm 0 3mm 9mm; padding-left: 5mm; }
+    li { margin-bottom: 1mm; text-align: justify; }
+    .dash { list-style: none; padding-left: 0; margin-left: 7mm; }
+    .dash li::before { content: "- "; margin-left: -5mm; }
+    .tight li { margin-bottom: .8mm; }
+    table.grid { width: 100%; border-collapse: collapse; margin: 2mm 0; font-size: 10.2pt; line-height: 1.2; }
+    table.grid th, table.grid td { border: 1px solid #222; padding: 1.5mm; vertical-align: top; }
+    table.grid th { background: #e9f3e7; text-align: center; font-weight: 700; }
+    .center { text-align: center; }
+    .right { text-align: right; }
+    .small { font-size: 10pt; }
+    .note { padding: 3mm 4mm; background: #f5f8f6; border-left: 3px solid #006b3f; text-align: justify; }
+    .figure { margin: 4mm auto 2mm; text-align: center; break-inside: avoid; }
+    .figure img { max-width: 100%; max-height: 218mm; object-fit: contain; }
+    .figure figcaption { margin-top: 1.5mm; font-style: italic; font-size: 10pt; }
+    .status-done { color: #006b3f; font-weight: 700; }
+    .status-scope { color: #8a6500; font-weight: 700; }
+    .status-plan { color: #9b2f2f; font-weight: 700; }
+    .signature { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #222; margin-top: 7mm; text-align: center; }
+    .signature > div { min-height: 54mm; padding: 4mm; }
+    .signature > div + div { border-left: 1px solid #222; }
+    .ref { font-size: 10.2pt; line-height: 1.25; word-break: break-word; }
+    .ref li { margin-bottom: 2mm; }
+    .continued { text-align: right; font-style: italic; font-size: 10.5pt; color: #555; }
+    .eyebrow { text-align: center; font-size: 12pt; text-transform: uppercase; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="institution">
+      <div>
+        <span>ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH</span>
+        <span>TRƯỜNG ĐẠI HỌC</span>
+        <span>CÔNG NGHỆ THÔNG TIN</span>
+      </div>
+      <div>
+        <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
+        <span>Độc lập - Tự do - Hạnh phúc</span>
+      </div>
+    </div>
+    <h1>Đề cương chi tiết</h1>
+    <div class="topic-box no-indent">
+      <h2 style="margin-top:0">TÊN ĐỀ TÀI:</h2>
+      <ul>
+        <li><b>Tên tiếng Việt:</b> Xây dựng nền tảng du lịch thông minh Touch VN tích hợp trí tuệ nhân tạo, bản đồ số và trải nghiệm thực tế tăng cường.</li>
+        <li><b>Tên tiếng Anh:</b> Developing Touch VN: An Intelligent Vietnam Travel Platform Integrating Artificial Intelligence, Digital Maps, and Augmented Reality.</li>
+      </ul>
+    </div>
+    <table class="meta">
+      <tr><td><span class="label">Cán bộ hướng dẫn:</span> <span class="placeholder">[HỌ TÊN VÀ HỌC HÀM/HỌC VỊ]</span></td></tr>
+      <tr><td><span class="label">Thời gian thực hiện:</span> Từ ngày 14/07/2026 đến ngày 20/09/2026 (dự kiến)</td></tr>
+      <tr><td><span class="label">Sinh viên thực hiện:</span><br>Sinh viên: <span class="placeholder">[HỌ VÀ TÊN]</span> &nbsp;&nbsp; MSSV: <span class="placeholder">[MSSV]</span> &nbsp;&nbsp; Số điện thoại: <span class="placeholder">[SỐ ĐIỆN THOẠI]</span></td></tr>
+    </table>
+    <h2>Giới thiệu đề tài:</h2>
+    <p>Du lịch Việt Nam sở hữu hệ thống tài nguyên phong phú trải dài từ miền Bắc, miền Trung đến miền Nam, bao gồm núi, biển, hải đảo, di sản văn hóa, công trình tâm linh, ẩm thực và các khu vui chơi. Tuy nhiên, thông tin phục vụ một chuyến đi thường phân tán trên nhiều website và ứng dụng. Người dùng phải tự tổng hợp dữ liệu điểm đến, thời tiết, phương án di chuyển, vé tham quan, dịch vụ lân cận và ngân sách, khiến quá trình chuẩn bị mất nhiều thời gian và khó đồng bộ.</p>
+    <p>Đối với khách du lịch theo nhóm, bài toán còn mở rộng sang quản lý chi tiêu, xác định người thanh toán, đối soát các khoản chi và lưu lại kế hoạch để các thành viên cùng theo dõi. Khách quốc tế gặp thêm rào cản ngôn ngữ; khách đi đến vùng sâu, vùng xa có thể gặp tình trạng kết nối yếu; trong khi việc tiếp cận thông tin lịch sử tại di tích vẫn chủ yếu phụ thuộc vào bảng giới thiệu hoặc hướng dẫn viên.</p>
+  </section>
+
+  <section class="page">
+    <h2>Giới thiệu đề tài (tiếp theo):</h2>
+    <p>Touch VN được đề xuất như một nền tảng du lịch số thống nhất, hỗ trợ người dùng trước, trong và sau chuyến đi. Hệ thống tập trung dữ liệu các địa điểm nổi tiếng theo ba miền, tổ chức theo đặc trưng và cung cấp trang chi tiết cho từng điểm đến. Từ một địa điểm cụ thể, người dùng có thể xem dự báo thời tiết, bản đồ, dịch vụ xung quanh, gói dữ liệu offline, mã QR và trải nghiệm AR trên camera.</p>
+    <p>Nền tảng tích hợp công cụ lập kế hoạch du lịch AI dựa trên điểm khởi hành, điểm đến, số ngày, số người, sở thích và ngân sách. Kết quả gồm lịch trình theo ngày, chi phí dự kiến và các khuyến nghị di chuyển. Chatbox nổi trên toàn website hỗ trợ giải đáp bằng ngôn ngữ tự nhiên về lộ trình, thời tiết, chi phí và địa điểm; khi có khóa API, hệ thống dùng mô hình OpenAI, nếu không sẽ chuyển sang cơ chế trả lời nội bộ để bảo đảm tính liên tục khi trình diễn.</p>
+    <p>Hệ thống được triển khai theo kiến trúc hai lớp ứng dụng bằng Python. Flask đảm nhiệm web portal và dashboard quản trị với Jinja2, HTML, CSS và JavaScript; FastAPI cung cấp REST API cho web/mobile và các hệ thống tích hợp. Hai lớp dùng chung mô hình dữ liệu, dịch vụ nghiệp vụ, cơ sở dữ liệu SQLite và các integration gateway. Cách tổ chức này giúp giảm lặp mã, dễ kiểm thử và tạo nền tảng để thay dữ liệu mẫu bằng nhà cung cấp thật.</p>
+    <p>Về vận hành, quản trị viên có thể cập nhật địa điểm, ảnh, nội dung website, đề xuất nâng cao, trạng thái hiển thị; theo dõi lượt truy cập, thời gian phản hồi và xuất dữ liệu CSV. Giao diện hỗ trợ tiếng Việt, tiếng Anh và tiếng Hàn, sử dụng bộ nhận diện vàng Gold, xanh lá đậm, xanh trời và sắc bình minh, trong đó Touch VN là tín hiệu thương hiệu chính.</p>
+    <p>Về an toàn, đề tài áp dụng các kiểm soát bảo mật theo OWASP Top 10 phiên bản hiện hành: phân quyền, băm mật khẩu, bảo vệ CSRF, Content Security Policy, kiểm tra dữ liệu đầu vào, truy vấn tham số hóa, giới hạn tần suất, cấu hình CORS, xử lý lỗi tập trung và logging. Các tích hợp ngoài được đặt thời gian chờ và có dữ liệu dự phòng để hạn chế lỗi lan truyền.</p>
+    <div class="note no-indent"><b>Định hướng sản phẩm:</b> phiên bản hiện tại là web app responsive có REST API dùng chung. Các luồng vé, AR và bản đồ offline được xây dựng ở mức nghiệp vụ/web phù hợp đồ án; kết nối thanh toán, AR native và tile map offline đầy đủ là hướng mở rộng sau nghiệm thu.</div>
+  </section>
+
+  <section class="page">
+    <h2>Mục tiêu:</h2>
+    <h3>a. Mục tiêu tổng quát</h3>
+    <p>Xây dựng nền tảng du lịch thông minh Touch VN trên môi trường web và API, hỗ trợ khám phá điểm đến Việt Nam, lập kế hoạch bằng AI, tra cứu dịch vụ liên quan và quản lý chuyến đi trong một hệ thống thống nhất; đồng thời cung cấp công cụ quản trị nội dung, theo dõi vận hành và bảo vệ ứng dụng theo các thực hành an toàn web hiện đại.</p>
+    <h3>b. Mục tiêu cụ thể</h3>
+    <ul class="dash">
+      <li>Xây dựng kho thông tin địa điểm du lịch tiêu biểu tại miền Bắc, miền Trung và miền Nam; cho phép tìm kiếm, lọc theo vùng, tỉnh và từ khóa.</li>
+      <li>Phân loại điểm đến theo núi, biển, hải đảo, tâm linh, văn hóa, lịch sử, ẩm thực và vui chơi; hỗ trợ xếp hạng must-go.</li>
+      <li>Xây dựng luồng tra cứu và giữ chỗ vé máy bay, tàu hỏa, xe khách và vé khu vui chơi; thiết kế cổng kết nối nhà cung cấp ngoài.</li>
+      <li>Phát triển bộ lập kế hoạch AI tạo lịch trình theo ngày dựa trên điểm đến, số ngày, ngân sách, số người và sở thích.</li>
+      <li>Đề xuất địa điểm và tiện ích gần người dùng hoặc gần điểm đến: ăn uống, khách sạn, nhà thuốc, cửa hàng, chợ, siêu thị, bệnh viện và vui chơi.</li>
+      <li>Dự toán ngân sách và xây dựng chức năng quản lý chi tiêu nhóm theo chuyến đi, người thanh toán, danh mục và ghi chú.</li>
+      <li>Hỗ trợ giao diện và nội dung chính bằng tiếng Việt, tiếng Anh, tiếng Hàn; duy trì lựa chọn ngôn ngữ xuyên suốt phiên làm việc.</li>
+      <li>Tích hợp chatbox hỗ trợ 24/7 bằng ngôn ngữ tự nhiên, có lịch sử trò chuyện và cơ chế dự phòng khi dịch vụ AI ngoài không sẵn sàng.</li>
+      <li>Thiết kế giao diện responsive theo bộ nhận diện Touch VN, ưu tiên khả năng đọc, thao tác nhanh và tính nhất quán.</li>
+      <li>Xây dựng dashboard người dùng và admin; quản trị địa điểm, nội dung, lượt truy cập, đề xuất nâng cao, cấu hình hiển thị và trạng thái tích hợp.</li>
+      <li>Tích hợp đăng ký, đăng nhập, phiên người dùng và phân quyền quản trị; bảo vệ các thao tác thay đổi dữ liệu.</li>
+      <li>Nhúng Google Maps, dự báo thời tiết theo tọa độ, AR/QR theo địa điểm và gói dữ liệu JSON/GeoJSON dùng khi mạng yếu.</li>
+      <li>Đánh giá chức năng, hiệu năng, khả năng đáp ứng và bảo mật theo ma trận yêu cầu cùng OWASP Top 10:2025.</li>
+    </ul>
+  </section>
+
+  <section class="page">
+    <h2>Phạm vi nghiên cứu:</h2>
+    <p>Đề tài tập trung phân tích, thiết kế và triển khai nền tảng du lịch Việt Nam dưới dạng web responsive kết hợp REST API. Phạm vi được giới hạn để bảo đảm có thể trình diễn và nghiệm thu đầy đủ các luồng cốt lõi trong thời gian thực hiện.</p>
+    <h3>a. Phạm vi dữ liệu</h3>
+    <ul class="dash">
+      <li>Dữ liệu điểm đến đại diện cho ba miền, gồm Vịnh Hạ Long, Sa Pa, Tràng An, Cố đô Huế, Hội An, Bà Nà Hills, Phú Quốc, Cần Thơ và Thành phố Hồ Chí Minh; quản trị viên có thể bổ sung địa điểm.</li>
+      <li>Mỗi địa điểm có tên, vùng, tỉnh/thành, danh mục, mô tả, điểm nổi bật, giá vé, mức chi tiêu, đánh giá, điểm must-go, tọa độ, dịch vụ gần, phương tiện và hình ảnh.</li>
+      <li>Dữ liệu người dùng, phiên chat, chuyến đi đã lưu, chi tiêu, giữ chỗ vé, địa điểm quản trị, cấu hình website, đề xuất và lượt xem trang được lưu trong SQLite.</li>
+      <li>Dữ liệu thời tiết lấy từ Open-Meteo hoặc provider cấu hình; nearby lấy từ OpenStreetMap/Overpass hoặc provider ngoài; có fallback nội bộ khi mạng lỗi.</li>
+      <li>Không lưu dữ liệu thanh toán thật, số thẻ ngân hàng hoặc giấy tờ tùy thân trong phạm vi đồ án.</li>
+    </ul>
+    <h3>b. Phạm vi kỹ thuật</h3>
+    <ul class="dash">
+      <li>Web portal server-rendered bằng Flask 3.1, Jinja2, HTML5, CSS3 và JavaScript thuần.</li>
+      <li>REST API bằng FastAPI 0.135, Pydantic 2.12 và OpenAPI; xác thực Bearer cho API cần bảo vệ.</li>
+      <li>Cơ sở dữ liệu quan hệ SQLite; lớp truy cập dữ liệu dùng truy vấn tham số hóa.</li>
+      <li>AI chat dùng OpenAI Responses API khi có khóa; planner có thuật toán nghiệp vụ nội bộ để bảo đảm demo độc lập.</li>
+      <li>AR ở mức Web Camera/QR overlay; offline map ở mức tải gói dữ liệu JSON/GeoJSON theo vùng. ARCore/ARKit/WebXR nâng cao và MBTiles nằm ngoài phạm vi hiện tại.</li>
+      <li>Triển khai cục bộ hoặc máy chủ WSGI bằng Waitress; cấu hình bí mật qua biến môi trường.</li>
+    </ul>
+    <h3>c. Phạm vi ứng dụng</h3>
+    <ul class="dash">
+      <li>Khách du lịch trong nước, khách quốc tế và nhóm bạn/gia đình cần lập kế hoạch và quản lý chi tiêu.</li>
+      <li>Quản trị viên nội dung và quản trị vận hành website.</li>
+      <li>REST API là nền tảng để mở rộng PWA hoặc ứng dụng di động trong giai đoạn sau.</li>
+    </ul>
+  </section>
+
+  <section class="page">
+    <h2>Nội dung và phương pháp thực hiện:</h2>
+    <h3>Nội dung 1: Khảo sát bài toán và nghiên cứu công nghệ</h3>
+    <h4>● Mục tiêu:</h4>
+    <p>Xác định nhu cầu của khách du lịch và quản trị viên, phân tích các giải pháp du lịch số hiện có, làm rõ khoảng trống về tích hợp dữ liệu, cá nhân hóa lộ trình, chi tiêu nhóm, đa ngôn ngữ, AR và hỗ trợ offline; từ đó xác lập yêu cầu chức năng và phi chức năng cho Touch VN.</p>
+    <h4>● Phương pháp:</h4>
+    <ul class="dash">
+      <li>Nghiên cứu tài liệu chính thức về Flask, FastAPI, Pydantic, SQLite, OpenAI API, Google Maps, Open-Meteo, OSM/Overpass và OWASP Top 10.</li>
+      <li>Khảo sát luồng sử dụng phổ biến: tìm điểm đến, xem chi tiết, lập lịch trình, tìm vé, dự toán, lưu chuyến, ghi chi tiêu và hỏi đáp.</li>
+      <li>Phân tích actor và use case; chuẩn hóa 16 yêu cầu của đề tài thành các module, route và dữ liệu đầu vào/đầu ra.</li>
+      <li>Xác định tiêu chí đánh giá: tính đầy đủ chức năng, tính đúng dữ liệu, khả năng sử dụng, thời gian phản hồi, độ ổn định và an toàn.</li>
+      <li>Đối chiếu khả năng tích hợp thật với phạm vi demo; thiết kế fallback để không phụ thuộc hoàn toàn vào API ngoài.</li>
+    </ul>
+    <h3>Nội dung 2: Phân tích, thiết kế và xây dựng nền tảng</h3>
+    <h4>● Mục tiêu:</h4>
+    <p>Xây dựng hệ thống có kiến trúc rõ ràng, tách lớp trình bày, API, dịch vụ nghiệp vụ, truy cập dữ liệu và tích hợp ngoài. Giao diện phải responsive, hỗ trợ ba ngôn ngữ và thể hiện nhất quán bộ nhận diện Touch VN.</p>
+    <h4>● Phương pháp:</h4>
+    <ul class="dash">
+      <li>Thiết kế kiến trúc Flask + FastAPI sử dụng chung thư mục <b>app/shared</b> cho model, service, database, i18n và integration gateway.</li>
+      <li>Thiết kế cơ sở dữ liệu SQLite cho người dùng, chat, chuyến đi, chi tiêu, vé, nội dung quản trị và analytics.</li>
+      <li>Phát triển giao diện Jinja theo từng chức năng thay vì trình bày danh sách năng lực tĩnh.</li>
+      <li>Xây dựng API theo mô hình request/response Pydantic, giới hạn giá trị đầu vào và công bố tài liệu OpenAPI.</li>
+      <li>Kiểm thử tăng dần theo từng module, sau đó nghiệm thu liên thông theo kịch bản người dùng.</li>
+    </ul>
+  </section>
+
+  <section class="page">
+    <h3>Kiến trúc và lựa chọn công nghệ</h3>
+    <table class="grid">
+      <tr><th style="width:23%">Thành phần</th><th style="width:28%">Công nghệ</th><th>Lý do lựa chọn</th></tr>
+      <tr><td>Web portal</td><td>Flask 3.1, Jinja2</td><td>Nhẹ, phù hợp server-rendered, quản lý session và dashboard; dễ tổ chức route và template.</td></tr>
+      <tr><td>REST API</td><td>FastAPI 0.135, Pydantic 2.12</td><td>Validation theo type hint, sinh OpenAPI tự động, thuận lợi cho web/mobile và tích hợp.</td></tr>
+      <tr><td>Giao diện</td><td>HTML5, CSS3, JavaScript</td><td>Không phụ thuộc framework front-end lớn; đáp ứng responsive, camera, QR và tương tác form.</td></tr>
+      <tr><td>Cơ sở dữ liệu</td><td>SQLite</td><td>Triển khai gọn cho đồ án, giao dịch ACID, truy vấn SQL và có thể chuyển sang PostgreSQL khi mở rộng.</td></tr>
+      <tr><td>AI</td><td>OpenAI Responses API + logic nội bộ</td><td>Cung cấp chat tự nhiên khi có API key; fallback bảo đảm hệ thống vẫn hoạt động.</td></tr>
+      <tr><td>Bản đồ và nearby</td><td>Google Maps Embed, OSM/Overpass</td><td>Hiển thị vị trí trực quan và tìm tiện ích lân cận dựa trên tọa độ.</td></tr>
+      <tr><td>Thời tiết</td><td>Open-Meteo</td><td>Tra cứu dự báo theo kinh độ/vĩ độ, không buộc người dùng nhập tên trạm.</td></tr>
+      <tr><td>AR và offline</td><td>Camera Web, QR, JSON/GeoJSON</td><td>Phù hợp trình diễn trên trình duyệt di động và có đường nâng cấp sang WebXR/MapLibre.</td></tr>
+      <tr><td>Triển khai</td><td>Uvicorn, Waitress</td><td>Phục vụ FastAPI/Flask theo đúng chuẩn ASGI/WSGI, cấu hình được qua môi trường.</td></tr>
+    </table>
+    <h3>Phân chia module</h3>
+    <table class="grid">
+      <tr><th>Nhóm</th><th>Module chính</th><th>Đầu ra</th></tr>
+      <tr><td>Khám phá</td><td>Tourism Content, Search &amp; Filter, Must-go</td><td>Danh sách và trang chi tiết điểm đến</td></tr>
+      <tr><td>Kế hoạch</td><td>AI Planner, Budget, Saved Trips</td><td>Lịch trình từng ngày và ngân sách</td></tr>
+      <tr><td>Dịch vụ</td><td>Ticket Hub, Weather, Nearby, Maps</td><td>Vé, dự báo và tiện ích theo vị trí</td></tr>
+      <tr><td>Trải nghiệm</td><td>Chat, i18n, AR/QR, Offline Pack</td><td>Hỗ trợ tự nhiên và dữ liệu tại điểm đến</td></tr>
+      <tr><td>Tài khoản</td><td>Auth, Session, Dashboard, Expense</td><td>Dữ liệu cá nhân, chuyến đi và chi tiêu</td></tr>
+      <tr><td>Quản trị</td><td>Content, Place, Recommendation, Analytics, Integration</td><td>CRUD, số liệu vận hành và cấu hình</td></tr>
+    </table>
+  </section>
+
+  <section class="page">
+    <h3>Ma trận 16 chức năng của đề tài</h3>
+    <table class="grid small">
+      <tr><th>STT</th><th>Yêu cầu</th><th>Cách hiện thực trong Touch VN</th><th>Mức triển khai</th></tr>
+      <tr><td class="center">1</td><td>Địa điểm theo ba miền</td><td><code>/places</code>, <code>/places/&lt;id&gt;</code>; lọc region và trang chi tiết.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">2</td><td>Phân loại đặc trưng</td><td>Núi, đảo, biển, tâm linh, văn hóa, ẩm thực, lịch sử, vui chơi.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">3</td><td>Vé xe, tàu, máy bay, vui chơi</td><td><code>/tickets</code>; tìm, giữ chỗ, lịch sử; integration gateway cho provider.</td><td class="status-scope">Nghiệp vụ web</td></tr>
+      <tr><td class="center">4</td><td>Kế hoạch du lịch AI</td><td><code>/planner</code>; lịch trình, chi phí, gợi ý theo sở thích và ngân sách.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">5</td><td>Địa điểm gần bạn</td><td>Geolocation + nearby service; OSM/Overpass hoặc provider ngoài, có fallback.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">6</td><td>Dự toán và chi tiêu nhóm</td><td>Budget breakdown, lưu chuyến và <code>/expenses</code> theo người thanh toán.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">7</td><td>Việt, Anh, Hàn</td><td>Bộ từ điển i18n, lựa chọn VI/EN/KO và dữ liệu đề xuất đa ngôn ngữ.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">8</td><td>Chatbox 24/7</td><td>Popup toàn site, lịch sử chat, OpenAI tùy chọn và phản hồi nội bộ dự phòng.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">9</td><td>Giao diện theo nhận diện</td><td>Tone Gold #D4AF37, xanh #006B3F, trời/bình minh; responsive.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">10</td><td>Quản lý Admin</td><td>CRUD địa điểm/nội dung/đề xuất, theo dõi lượt truy cập và export CSV.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">11</td><td>Dashboard và cài đặt</td><td>KPI, top place, booking, trip, expense, block visibility và integration status.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">12</td><td>Đăng ký, đăng nhập</td><td>SQLite user, băm mật khẩu, session web, Bearer token API, admin role.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">13</td><td>Google Maps</td><td>Nhúng bản đồ tại danh sách/chi tiết và mở chỉ đường ngoài hệ thống.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">14</td><td>Dự báo thời tiết</td><td>Open-Meteo theo tọa độ, hiển thị nhiệt độ, điều kiện và lời khuyên.</td><td class="status-done">Hoạt động</td></tr>
+      <tr><td class="center">15</td><td>AR quét di tích</td><td>QR scanner, camera viewer và overlay nội dung theo địa điểm.</td><td class="status-scope">Phạm vi web</td></tr>
+      <tr><td class="center">16</td><td>Bản đồ offline</td><td>Tải gói JSON/GeoJSON theo vùng từ trang chi tiết địa điểm.</td><td class="status-scope">Gói dữ liệu</td></tr>
+    </table>
+    <p class="small no-indent"><b>Ghi chú:</b> “Nghiệp vụ web” và “Phạm vi web” mô tả đúng mức hiện thực của đồ án, không đồng nghĩa đã kết nối thanh toán hoặc SDK AR native trong môi trường production.</p>
+  </section>
+
+  <section class="page">
+    <h3>Thiết kế dữ liệu và luồng nghiệp vụ</h3>
+    <table class="grid small">
+      <tr><th>Bảng</th><th>Chức năng</th><th>Quan hệ/đặc điểm</th></tr>
+      <tr><td><code>users</code></td><td>Tài khoản người dùng</td><td>Email duy nhất, mật khẩu lưu dạng hash</td></tr>
+      <tr><td><code>chat_sessions</code></td><td>Phiên trò chuyện</td><td>Một phiên có nhiều chat_messages</td></tr>
+      <tr><td><code>chat_messages</code></td><td>Lịch sử câu hỏi/trả lời</td><td>Khóa ngoại session_id</td></tr>
+      <tr><td><code>saved_trips</code></td><td>Kế hoạch đã lưu</td><td>Liên kết user_email, lưu itinerary/budget JSON</td></tr>
+      <tr><td><code>expense_items</code></td><td>Khoản chi theo chuyến</td><td>Liên kết user_email và trip_id</td></tr>
+      <tr><td><code>ticket_bookings</code></td><td>Giữ chỗ vé</td><td>Mã đặt chỗ duy nhất, liên kết người dùng</td></tr>
+      <tr><td><code>managed_places</code></td><td>Địa điểm do admin cập nhật</td><td>Lưu place_json, trạng thái active</td></tr>
+      <tr><td><code>site_content_settings</code></td><td>Thông tin website</td><td>Key-value và dấu vết cập nhật</td></tr>
+      <tr><td><code>admin_recommendations</code></td><td>Đề xuất đa ngôn ngữ</td><td>VI/EN/KO, priority, display_order</td></tr>
+      <tr><td><code>page_view_events</code></td><td>Analytics nội bộ</td><td>Path, status, response time, visitor, language</td></tr>
+      <tr><td><code>dashboard_block_visibility</code></td><td>Cài đặt dashboard</td><td>Bật/tắt từng block hiển thị</td></tr>
+    </table>
+    <h3>Luồng người dùng chính</h3>
+    <ol>
+      <li>Người dùng vào trang chủ, chọn ngôn ngữ và khám phá điểm đến theo vùng hoặc danh mục.</li>
+      <li>Tại trang chi tiết, hệ thống tổng hợp ảnh, mô tả, thời tiết, nearby, bản đồ, QR, AR và gói offline của chính địa điểm đó.</li>
+      <li>Người dùng mở planner, nhập thông tin chuyến đi; hệ thống kiểm tra dữ liệu, lập lịch trình và dự toán.</li>
+      <li>Nếu đã đăng nhập, người dùng lưu kế hoạch, chuyển sang tìm/giữ chỗ vé và ghi các khoản chi thực tế.</li>
+      <li>Chat AI hỗ trợ xuyên suốt, dùng ngữ cảnh điểm đến, lộ trình, thời tiết và dữ liệu đang có.</li>
+    </ol>
+    <h3>Luồng quản trị</h3>
+    <ol>
+      <li>Admin đăng nhập và được kiểm tra quyền trước khi truy cập route quản trị.</li>
+      <li>Admin cập nhật địa điểm, nội dung, ảnh, đề xuất và cấu hình block dashboard.</li>
+      <li>Dashboard đọc page view events để tổng hợp truy cập, route phổ biến, visitor và thời gian phản hồi; hỗ trợ xuất CSV.</li>
+      <li>Trung tâm tích hợp hiển thị provider đang live, fallback hay chờ cấu hình và cho phép probe endpoint sức khỏe.</li>
+    </ol>
+  </section>
+
+  <section class="page">
+    <h3>Nội dung 3: AI, dịch vụ theo vị trí và trải nghiệm tại điểm đến</h3>
+    <h4>● Mục tiêu:</h4>
+    <p>Kết hợp dữ liệu điểm đến với các nguồn dữ liệu động để đưa ra gợi ý thực tế, có thể giải thích ở mức nghiệp vụ và không làm gián đoạn trải nghiệm khi API bên ngoài không sẵn sàng.</p>
+    <h4>● Phương pháp thực hiện:</h4>
+    <ul>
+      <li><b>AI Planner:</b> chuẩn hóa đầu vào; chọn điểm đến phù hợp; phân phối hoạt động buổi sáng, chiều, tối; cân đối ngân sách theo số người và số ngày; sinh mẹo du lịch.</li>
+      <li><b>Chat tự nhiên:</b> xây dựng system prompt chuyên biệt du lịch Việt Nam; đưa ngữ cảnh ứng dụng vào phản hồi; giới hạn độ dài và lưu lịch sử phiên.</li>
+      <li><b>Thời tiết:</b> dùng tọa độ điểm đến để gọi dự báo; chuyển mã thời tiết thành mô tả và lời khuyên theo ngôn ngữ.</li>
+      <li><b>Nearby:</b> nhận vị trí trình duyệt hoặc tọa độ điểm đến; chuẩn hóa tag OSM thành nhóm nhà hàng, khách sạn, y tế, bán lẻ và vui chơi; xếp theo khoảng cách.</li>
+      <li><b>Vé:</b> chuẩn hóa loại phương tiện, ngày đi, điểm đi/đến, số khách; materialize dữ liệu theo ngày; giữ chỗ và sinh mã tham chiếu.</li>
+      <li><b>AR/QR:</b> tạo QR cho từng địa điểm; camera quét mã và mở AR viewer kèm lớp thông tin di sản.</li>
+      <li><b>Offline:</b> đóng gói metadata điểm đến và đối tượng GeoJSON theo miền, cho phép tải trực tiếp về thiết bị.</li>
+    </ul>
+    <h3>Cơ chế chịu lỗi tích hợp</h3>
+    <table class="grid small">
+      <tr><th>Tích hợp</th><th>Chế độ chính</th><th>Fallback</th></tr>
+      <tr><td>AI</td><td>OpenAI Responses API</td><td>Logic trả lời nội bộ theo từ khóa và ngữ cảnh</td></tr>
+      <tr><td>Thời tiết</td><td>Provider cấu hình hoặc Open-Meteo</td><td>Dự báo mẫu theo điểm đến</td></tr>
+      <tr><td>Nearby</td><td>Provider ngoài hoặc OSM/Overpass</td><td>Danh sách dịch vụ có sẵn trong dữ liệu điểm đến</td></tr>
+      <tr><td>Vé</td><td>External Ticket API</td><td>Kho offer nội bộ và cổng giữ chỗ</td></tr>
+      <tr><td>AR/Offline</td><td>Provider ngoài</td><td>QR-camera và gói JSON/GeoJSON nội bộ</td></tr>
+    </table>
+  </section>
+
+  <section class="page">
+    <h3>Nội dung 4: Bảo mật, kiểm thử và đánh giá</h3>
+    <h4>● Mục tiêu:</h4>
+    <p>Đánh giá hệ thống không chỉ theo số lượng chức năng mà còn theo tính đúng, độ ổn định, khả năng sử dụng và mức kiểm soát các rủi ro web phổ biến. Chuẩn đối chiếu chính là OWASP Top 10:2025, kết hợp các kịch bản kiểm thử chức năng cho 16 yêu cầu.</p>
+    <h4>● Ma trận OWASP Top 10:2025:</h4>
+    <table class="grid small">
+      <tr><th>Mã</th><th>Rủi ro</th><th>Kiểm soát trong Touch VN</th></tr>
+      <tr><td>A01</td><td>Broken Access Control</td><td>Kiểm tra session/Bearer, route admin riêng, xác minh quyền trước CRUD và export.</td></tr>
+      <tr><td>A02</td><td>Security Misconfiguration</td><td>Biến môi trường, CORS allowlist, CSP, security headers, giới hạn upload, tắt debug khi production.</td></tr>
+      <tr><td>A03</td><td>Software Supply Chain Failures</td><td>Khóa phiên bản requirements; rà dependency và cập nhật có kiểm soát trong kế hoạch CI.</td></tr>
+      <tr><td>A04</td><td>Cryptographic Failures</td><td>Băm mật khẩu bằng Werkzeug, token ký, không hard-code secret; yêu cầu HTTPS khi triển khai thật.</td></tr>
+      <tr><td>A05</td><td>Injection</td><td>Truy vấn SQLite tham số hóa, Pydantic validation, Jinja autoescape, giới hạn chiều dài input.</td></tr>
+      <tr><td>A06</td><td>Insecure Design</td><td>Phân lớp, threat modeling theo use case, giới hạn nghiệp vụ, fallback và nguyên tắc quyền tối thiểu.</td></tr>
+      <tr><td>A07</td><td>Authentication Failures</td><td>Password tối thiểu, rate limit login, session/token có thời hạn, thông báo lỗi không tiết lộ tài khoản.</td></tr>
+      <tr><td>A08</td><td>Software or Data Integrity Failures</td><td>Kiểm tra kiểu tệp/định dạng, signed token, validation dữ liệu tích hợp trước khi lưu hoặc hiển thị.</td></tr>
+      <tr><td>A09</td><td>Security Logging and Alerting Failures</td><td>Request ID, access/error log, page view/status/response time; tránh ghi mật khẩu và API key.</td></tr>
+      <tr><td>A10</td><td>Mishandling of Exceptional Conditions</td><td>Error handler 404/500, timeout API ngoài, fallback, phản hồi lỗi chuẩn và không lộ stack trace.</td></tr>
+    </table>
+    <h4>● Phương pháp đánh giá:</h4>
+    <ul class="dash tight">
+      <li>Kiểm thử route và API theo dữ liệu hợp lệ, biên và không hợp lệ.</li>
+      <li>Kiểm thử đăng nhập, phân quyền, CSRF, open redirect, injection, upload và rate limit.</li>
+      <li>Kiểm tra responsive trên desktop/mobile, ba ngôn ngữ và khả năng thao tác bằng bàn phím.</li>
+      <li>Đo thời gian phản hồi route nội bộ; phân biệt thời gian chờ do provider ngoài.</li>
+      <li>Kiểm thử fallback bằng cách tắt API key hoặc mô phỏng lỗi mạng.</li>
+    </ul>
+  </section>
+
+  <section class="page">
+    <h2>Sơ đồ kiến trúc tổng thể:</h2>
+    <figure class="figure">
+      <img src="decuong-assets/architecture.png" alt="Kiến trúc tổng thể Touch VN">
+      <figcaption>Hình 1. Kiến trúc Flask/FastAPI, lớp dịch vụ dùng chung, cơ sở dữ liệu và tích hợp ngoài.</figcaption>
+    </figure>
+    <p class="small no-indent">Luồng yêu cầu từ web portal hoặc REST API đều đi qua lớp dịch vụ dùng chung. Cơ sở dữ liệu và integration gateway được cô lập khỏi giao diện, giúp thay provider mà không phải viết lại toàn bộ luồng người dùng.</p>
+  </section>
+
+  <section class="page">
+    <h2>Sơ đồ Use Case:</h2>
+    <figure class="figure">
+      <img src="decuong-assets/use-case.png" alt="Use case Touch VN">
+      <figcaption>Hình 2. Nhóm use case chính của khách du lịch và quản trị viên.</figcaption>
+    </figure>
+    <p class="small no-indent">Khách du lịch có thể sử dụng các chức năng khám phá mà không cần tài khoản; đăng nhập là điều kiện để lưu chuyến, giữ lịch sử vé và quản lý chi tiêu. Quản trị viên được phân quyền để thực hiện các chức năng thay đổi dữ liệu và xem analytics.</p>
+  </section>
+
+  <section class="page">
+    <h2>Sơ đồ hoạt động lập kế hoạch AI:</h2>
+    <figure class="figure">
+      <img src="decuong-assets/planner-flow.png" alt="Luồng planner Touch VN">
+      <figcaption>Hình 3. Quy trình kiểm tra đầu vào, tổng hợp dữ liệu và tạo kế hoạch cá nhân hóa.</figcaption>
+    </figure>
+  </section>
+
+  <section class="page">
+    <h2>Sơ đồ mô hình dữ liệu:</h2>
+    <figure class="figure">
+      <img src="decuong-assets/data-model.png" alt="Mô hình dữ liệu Touch VN">
+      <figcaption>Hình 4. Các bảng SQLite và quan hệ khóa ngoại cốt lõi của Touch VN.</figcaption>
+    </figure>
+    <p class="small no-indent">Các bảng nội dung quản trị và analytics được thiết kế độc lập với dữ liệu chuyến đi để giảm liên kết không cần thiết. Những quan hệ được thể hiện trên sơ đồ là quan hệ khóa ngoại thực tế: người dùng–chuyến đi/vé/chi tiêu, chuyến đi–chi tiêu và phiên chat–tin nhắn.</p>
+  </section>
+
+  <section class="page">
+    <h2>Kết quả mong đợi:</h2>
+    <ul class="dash">
+      <li>Hoàn thiện web app Touch VN có giao diện chuyên nghiệp, responsive và sử dụng nhất quán nhận diện Gold–Green–Sky–Sunrise.</li>
+      <li>Hiển thị, tìm kiếm và phân loại địa điểm nổi bật tại ba miền; trang chi tiết tích hợp bản đồ, thời tiết, nearby, QR/AR và offline theo từng địa điểm.</li>
+      <li>Hoàn thiện AI Planner, dự toán, lưu chuyến, quản lý chi tiêu nhóm và chatbox tự nhiên hỗ trợ ba ngôn ngữ.</li>
+      <li>Hoàn thiện luồng tìm vé, giữ chỗ và quản lý booking ở mức nghiệp vụ; sẵn sàng thay bằng provider thật qua integration gateway.</li>
+      <li>Hoàn thiện đăng ký, đăng nhập, session/token và phân quyền user/admin.</li>
+      <li>Hoàn thiện dashboard và công cụ admin: nội dung, địa điểm, ảnh, đề xuất, block hiển thị, analytics, CSV và trạng thái tích hợp.</li>
+      <li>Cung cấp FastAPI REST API cho địa điểm, thời tiết, nearby, vé, planner, budget, chat, auth, dashboard, AR và offline.</li>
+      <li>Đảm bảo các luồng quan trọng có validation, CSRF, CSP, rate limit, security headers, truy vấn tham số hóa và error handling.</li>
+      <li>Xây dựng tài liệu phân tích–thiết kế, ma trận nghiệm thu 16 chức năng, hướng dẫn triển khai và gói phát hành.</li>
+    </ul>
+    <h3>Tiêu chí nghiệm thu đề xuất</h3>
+    <table class="grid">
+      <tr><th>Nhóm</th><th>Tiêu chí</th><th>Ngưỡng/điều kiện</th></tr>
+      <tr><td>Chức năng</td><td>16 yêu cầu có route/giao diện và kịch bản minh chứng</td><td>Không có luồng cốt lõi gây lỗi 500</td></tr>
+      <tr><td>Dữ liệu</td><td>Truy vấn, lưu và đối soát đúng người dùng/chuyến đi</td><td>Không lẫn dữ liệu giữa các tài khoản</td></tr>
+      <tr><td>Hiệu năng</td><td>Route nội bộ phản hồi ổn định trong môi trường demo</td><td>Mục tiêu ≤ 2 giây, không tính API ngoài</td></tr>
+      <tr><td>Responsive</td><td>Không tràn/đè chữ trên desktop và mobile phổ biến</td><td>Kiểm tra tối thiểu 1440 px và 390 px</td></tr>
+      <tr><td>Ngôn ngữ</td><td>VI/EN/KO hoạt động ở các luồng chính</td><td>Không hiển thị khóa dịch thô</td></tr>
+      <tr><td>Bảo mật</td><td>Kiểm soát OWASP, auth, CSRF, rate limit và headers</td><td>Các kiểm thử tiêu cực chính bị chặn đúng</td></tr>
+      <tr><td>Chịu lỗi</td><td>Provider ngoài lỗi vẫn có phản hồi có kiểm soát</td><td>Không lộ stack trace hoặc làm trắng trang</td></tr>
+    </table>
+  </section>
+
+  <section class="page">
+    <h2>Kế hoạch thực hiện:</h2>
+    <table class="grid">
+      <tr><th style="width:7%">STT</th><th>Công việc</th><th style="width:17%">Ngày bắt đầu</th><th style="width:17%">Ngày kết thúc</th><th style="width:15%">Trạng thái</th></tr>
+      <tr><td class="center">1</td><td>Trao đổi và thống nhất đề tài; khảo sát nhu cầu, thu thập tài liệu, chuẩn hóa 16 yêu cầu và xác định phạm vi.</td><td>14/07/2026</td><td>19/07/2026</td><td>Đã thực hiện</td></tr>
+      <tr><td class="center">2</td><td>Phân tích use case, kiến trúc, cơ sở dữ liệu, giao diện và kế hoạch kiểm thử; xây dựng dữ liệu mẫu ba miền.</td><td>20/07/2026</td><td>26/07/2026</td><td>Đang thực hiện</td></tr>
+      <tr><td class="center">3</td><td>Hoàn thiện web portal và REST API cho địa điểm, tìm kiếm, auth, bản đồ, thời tiết và đa ngôn ngữ.</td><td>27/07/2026</td><td>09/08/2026</td><td>Dự kiến</td></tr>
+      <tr><td class="center">4</td><td>Hoàn thiện planner AI, chatbox, nearby, vé, dự toán, lưu chuyến và chi tiêu nhóm.</td><td>10/08/2026</td><td>23/08/2026</td><td>Dự kiến</td></tr>
+      <tr><td class="center">5</td><td>Hoàn thiện admin dashboard, analytics, nội dung, đề xuất, AR/QR, offline pack và integration gateway.</td><td>24/08/2026</td><td>06/09/2026</td><td>Dự kiến</td></tr>
+      <tr><td class="center">6</td><td>Rà soát OWASP Top 10:2025, kiểm thử chức năng–bảo mật–responsive, sửa lỗi và đóng gói ứng dụng.</td><td>07/09/2026</td><td>13/09/2026</td><td>Dự kiến</td></tr>
+      <tr><td class="center">7</td><td>Tổng hợp kết quả, hoàn thiện báo cáo, tài liệu hướng dẫn, slide và chuẩn bị bảo vệ đề tài.</td><td>14/09/2026</td><td>20/09/2026</td><td>Dự kiến</td></tr>
+    </table>
+    <div class="note no-indent"><b>Lưu ý khi nộp:</b> thay các trường màu đỏ ở trang đầu bằng thông tin sinh viên và cán bộ hướng dẫn; điều chỉnh ngày và trạng thái theo kế hoạch được khoa phê duyệt.</div>
+  </section>
+
+  <section class="page">
+    <h2>Tài liệu tham khảo:</h2>
+    <ol class="ref">
+      <li>OWASP Foundation. (2025). <i>OWASP Top 10:2025</i>. https://owasp.org/Top10/2025/</li>
+      <li>Pallets Projects. (2026). <i>Flask Documentation 3.1.x</i>. https://flask.palletsprojects.com/en/stable/</li>
+      <li>Ramírez, S. (2026). <i>FastAPI Documentation</i>. https://fastapi.tiangolo.com/</li>
+      <li>Pydantic Services Inc. (2026). <i>Pydantic Documentation</i>. https://docs.pydantic.dev/latest/</li>
+      <li>Python Software Foundation. (2026). <i>Python 3 Documentation</i>. https://docs.python.org/3/</li>
+      <li>SQLite Consortium. (2026). <i>SQLite Documentation</i>. https://www.sqlite.org/docs.html</li>
+      <li>OpenAI. (2026). <i>OpenAI API Documentation</i>. https://platform.openai.com/docs/</li>
+      <li>Open-Meteo. (2026). <i>Weather Forecast API Documentation</i>. https://open-meteo.com/en/docs</li>
+      <li>OpenStreetMap Foundation. (2026). <i>OpenStreetMap Wiki and Overpass API</i>. https://wiki.openstreetmap.org/wiki/Overpass_API</li>
+      <li>Google for Developers. (2026). <i>Maps Embed API</i>. https://developers.google.com/maps/documentation/embed/</li>
+      <li>W3C. (2023). <i>Web Content Accessibility Guidelines (WCAG) 2.2</i>. https://www.w3.org/TR/WCAG22/</li>
+      <li>Touch VN Project. (2026). <i>Tài liệu phân tích thiết kế, ma trận nghiệm thu và mã nguồn ứng dụng</i>.</li>
+    </ol>
+    <div class="signature">
+      <div>
+        <b>Xác nhận của CBHD</b><br>
+        (Ký tên và ghi rõ họ tên)
+      </div>
+      <div>
+        <b>TP. HCM, ngày ..... tháng ..... năm 2026</b><br>
+        <b>Sinh viên</b><br>
+        (Ký tên và ghi rõ họ tên)<br><br><br>
+        <span class="placeholder">[HỌ VÀ TÊN]</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

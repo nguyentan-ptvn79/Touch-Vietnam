@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block content %}
+{% set place = place_card.place %}
+{% set weather = place_card.weather %}
+<section class="section-block">
+    <div class="section-heading">
+        <span class="eyebrow">{{ t('places_eyebrow') }}</span>
+        <h1>{{ place.name }}</h1>
+        <p>{{ place.description }}</p>
+    </div>
+</section>
+
+<section class="two-column detail-layout">
+    <article class="place-card detail-card">
+        <div class="place-art">
+            <img
+                src="{{ url_for('static', filename=place_image_asset(place.id)) }}"
+                alt="{{ place.name }}"
+                class="place-art-image"
+                loading="lazy"
+            >
+        </div>
+        <div class="place-body">
+            <div class="place-header">
+                <h2>{{ place.name }}</h2>
+                <span class="score">{{ place.rating }}</span>
+            </div>
+            <div class="tag-row">
+                {% for category in place.categories %}
+                    <span class="tag">{{ category_labels.get(category, category) }}</span>
+                {% endfor %}
+            </div>
+            <ul class="mini-list">
+                {% for highlight in place.highlights %}
+                    <li>{{ highlight }}</li>
+                {% endfor %}
+            </ul>
+            <div class="place-meta">
+                <span>{{ place.province }}</span>
+                <span>{{ t('ticket_price') }}: {{ place.ticket_price|currency }}</span>
+                <span>{{ t('places_avg_spend') }}: {{ place.avg_spend|currency }}</span>
+            </div>
+            <div class="inline-actions place-actions">
+                <a class="button secondary" href="{{ place_card.map_view_url }}" target="_blank" rel="noopener noreferrer">{{ t('places_map_open') }}</a>
+                <a class="button secondary" href="#place-smart-tools">{{ t('place_tools_anchor') }}</a>
+            </div>
+        </div>
+    </article>
+
+    <article class="glass-card qr-info-card">
+        <span class="card-label">{{ t('qr_card_label') }}</span>
+        <h3>{{ t('qr_place_title') }}</h3>
+        <img class="qr-image" src="{{ place_card.qr_image_url }}" alt="{{ t('qr_image_alt', place=place.name) }}">
+        <p>{{ t('place_detail_qr_direct') }}</p>
+        <div class="inline-actions">
+            <a class="button secondary" href="{{ place_card.qr_image_url }}" target="_blank" rel="noopener noreferrer">{{ t('qr_open_image') }}</a>
+            <a class="text-link" href="{{ qr_target_url }}" target="_blank" rel="noopener noreferrer">{{ t('qr_open_detail') }}</a>
+        </div>
+    </article>
+</section>
+
+<section class="section-block place-detail-info-section">
+    <div class="section-heading">
+        <span class="eyebrow">{{ t('places_eyebrow') }}</span>
+        <h2>{{ t('place_detail_info_title') }}</h2>
+        <p>{{ t('place_detail_info_intro') }}</p>
+    </div>
+
+    <div class="place-detail-info-grid">
+        {% for row in detail_rows %}
+            <article class="place-detail-info-card">
+                <span>{{ row.label }}</span>
+                <strong>{{ row.value }}</strong>
+            </article>
+        {% endfor %}
+    </div>
+
+    <div class="two-column place-detail-rich-grid">
+        <article class="glass-card place-detail-text-card">
+            <span class="card-label">{{ t('place_detail_highlights_title') }}</span>
+            <h3>{{ place.name }}</h3>
+            <p>{{ place.description }}</p>
+            <ul class="mini-list detail-highlight-list">
+                {% for highlight in place.highlights %}
+                    <li>{{ highlight }}</li>
+                {% endfor %}
+            </ul>
+        </article>
+
+        <article class="glass-card place-detail-text-card">
+            <span class="card-label">{{ t('place_detail_services_title') }}</span>
+            <h3>{{ t('planner_nearby_title') }}</h3>
+            <p>{{ t('place_detail_services_intro') }}</p>
+            <div class="tag-row detail-service-tags">
+                {% for service in place.nearby_services %}
+                    <span class="tag">{{ service_label(service) }}</span>
+                {% endfor %}
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section-block place-smart-tools" id="place-smart-tools">
+    <div class="section-heading">
+        <span class="eyebrow">{{ t('place_tools_eyebrow') }}</span>
+        <h2>{{ t('place_tools_title') }}</h2>
+        <p>{{ t('place_tools_intro') }}</p>
+    </div>
+    <div class="feature-grid place-tool-grid">
+        <article class="feature-card place-tool-card">
+            <span class="feature-icon">MAP</span>
+            <div>
+                <h3>{{ t('places_map_title') }}</h3>
+                <a class="text-link" href="{{ place_card.map_view_url }}" target="_blank" rel="noopener noreferrer">{{ t('places_map_open') }}</a>
+            </div>
+        </article>
+
+        <article class="feature-card place-tool-card">
+            <span class="feature-icon">OFF</span>
+            <div>
+                <h3>{{ t('place_tools_offline_title') }}</h3>
+                {% if offline_pack %}
+                    <p><strong>{{ offline_pack.name }}</strong></p>
+                    <p>{{ offline_pack.coverage }}</p>
+                    <div class="inline-actions compact-actions">
+                        <a class="text-link" href="{{ url_for('offline_pack_download', region=place.region) }}">{{ runtime_ui.offline_download_json }}</a>
+                        <a class="text-link" href="{{ url_for('offline_pack_geojson', region=place.region) }}">{{ runtime_ui.offline_download_geojson }}</a>
+                    </div>
+                {% else %}
+                    <p>{{ t('place_tools_offline_empty') }}</p>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="feature-card place-tool-card">
+            <span class="feature-icon">AR</span>
+            <div>
+                <h3>{{ t('place_tools_ar_title') }}</h3>
+                <div class="inline-actions compact-actions">
+                    <a class="text-link" href="{{ url_for('ar_place_view', place_id=place.id) }}">{{ runtime_ui.ar_open_viewer }}</a>
+                    <a class="text-link" href="{{ url_for('scan_qr') }}">{{ t('nav_scan_qr') }}</a>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    {% if ar_landmarks %}
+        <div class="stack-list place-ar-list">
+            {% for item in ar_landmarks %}
+                <article class="glass-card stack-row">
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <p>{{ item.note }}</p>
+                    </div>
+                    <a class="button secondary" href="{{ item.viewer_url }}">{{ runtime_ui.ar_open_viewer }}</a>
+                </article>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
+
+<section class="two-column detail-layout">
+    {% if weather %}
+        <article class="glass-card">
+            <span class="card-label">{{ t('places_live_weather_title') }}</span>
+            <div class="place-weather-top">
+                <strong>{{ weather.temperature_c }}&deg;C</strong>
+                <span>{{ weather.condition }}</span>
+            </div>
+            <p>{{ weather.advice }}</p>
+            {% if weather.temperature_high_c is not none and weather.temperature_low_c is not none %}
+                <small>{{ t('places_weather_range', high=weather.temperature_high_c, low=weather.temperature_low_c) }}</small>
+            {% endif %}
+            {% if weather.wind_speed_kmh is not none %}
+                <small>{{ t('places_weather_wind', wind=weather.wind_speed_kmh) }}</small>
+            {% endif %}
+            {% if weather.source %}
+                <small>{{ weather.source }}</small>
+            {% endif %}
+        </article>
+    {% endif %}
+
+    <article class="glass-card">
+        <span class="card-label">{{ t('planner_nearby_label') }}</span>
+        <h3>{{ t('planner_nearby_title') }}</h3>
+        <div class="stack-list">
+            {% for item in nearby_services %}
+                <div class="stack-row">
+                    <strong>{{ item.name }}</strong>
+                    <span>{{ item.distance_km }} km</span>
+                    <p>{{ item.note }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+
+<section class="section-block">
+    <article class="glass-card">
+        <div class="place-map-header">
+            <span class="card-label">{{ t('places_map_title') }}</span>
+            <a href="{{ place_card.map_view_url }}" target="_blank" rel="noopener noreferrer">{{ t('places_map_open') }}</a>
+        </div>
+        <iframe
+            class="map-frame"
+            src="{{ place_card.map_embed_url }}"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            title="{{ place.name }}"
+        ></iframe>
+    </article>
+</section>
+{% endblock %}

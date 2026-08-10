@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-page admin-workspace admin-dashboard-page">
+    {% set admin_status_label = {'vi': 'Đang hoạt động', 'en': 'Active', 'ko': '활성'}[current_language] %}
+    {% set admin_time_label = {'vi': 'Cập nhật', 'en': 'Updated', 'ko': '업데이트'}[current_language] %}
+    <div class="admin-dashboard-header">
+        <div class="admin-dashboard-heading">
+            <span class="eyebrow">{{ t('admin_dashboard_eyebrow') }}</span>
+            <h1>{{ t('admin_dashboard_title') }}</h1>
+        </div>
+        <div class="admin-dashboard-status">
+            <span class="admin-status-pill">
+                <span aria-hidden="true"></span>
+                {{ admin_status_label }}
+            </span>
+            <span class="admin-role-pill">Admin</span>
+            <time datetime="{{ current_time_iso }}">{{ admin_time_label }} {{ current_time_display }}</time>
+        </div>
+    </div>
+
+    <section class="section-block">
+        {% include "dashboard_sections/admin_controls.html" %}
+    </section>
+
+    <section class="admin-tool-grid">
+        <article class="glass-card admin-tools-panel">
+            <div class="admin-tools-heading">
+                <div>
+                    <span class="card-label">{{ t('admin_tools_label') }}</span>
+                    <h3>{{ t('admin_tools_title') }}</h3>
+                </div>
+            </div>
+            <div class="admin-action-grid">
+                <a class="admin-action-card" href="{{ url_for('admin_site_content') }}">
+                    <span class="admin-action-icon">WEB</span>
+                    <span>{{ t('admin_tool_site_content') }}</span>
+                    <strong>-&gt;</strong>
+                </a>
+                <a class="admin-action-card" href="{{ url_for('admin_places') }}">
+                    <span class="admin-action-icon">MAP</span>
+                    <span>{{ t('admin_tool_places') }}</span>
+                    <strong>-&gt;</strong>
+                </a>
+                <a class="admin-action-card" href="{{ url_for('admin_recommends') }}">
+                    <span class="admin-action-icon">UP</span>
+                    <span>{{ t('admin_tool_recommendations') }}</span>
+                    <strong>-&gt;</strong>
+                </a>
+                <a class="admin-action-card" href="{{ url_for('admin_integrations') }}">
+                    <span class="admin-action-icon">API</span>
+                    <span>{{ t('admin_tool_integrations') }}</span>
+                    <strong>-&gt;</strong>
+                </a>
+            </div>
+        </article>
+    </section>
+
+    <section class="summary-grid">
+        {% for metric in summary.metrics %}
+            <article class="metric-card">
+                <span>{{ metric.name }}</span>
+                <strong>{{ metric.value }}</strong>
+                <small>{{ metric.trend }}</small>
+            </article>
+        {% endfor %}
+    </section>
+
+    <section class="two-column analytics-layout">
+        <article class="glass-card admin-analytics-card">
+            <div class="admin-panel-heading analytics-panel-heading">
+                <div class="analytics-heading-copy">
+                    <span class="card-label analytics-live-label">
+                        <span class="analytics-live-dot" aria-hidden="true"></span>
+                        {{ analytics.labels.title }}
+                    </span>
+                    <h3>{{ analytics.labels.intro }}</h3>
+                </div>
+                <a class="admin-panel-link analytics-export-link" href="{{ url_for('admin_analytics_export') }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3v12"></path>
+                        <path d="m7 10 5 5 5-5"></path>
+                        <path d="M5 20h14"></path>
+                    </svg>
+                    {{ analytics.labels.export }}
+                </a>
+            </div>
+
+            <div class="budget-grid analytics-kpis">
+                <div class="analytics-kpi analytics-kpi-featured">
+                    <div class="analytics-kpi-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 19V9"></path>
+                            <path d="M10 19V5"></path>
+                            <path d="M16 19v-7"></path>
+                            <path d="M22 19H2"></path>
+                        </svg>
+                    </div>
+                    <span>{{ analytics.labels.visits_30d }}</span>
+                    <strong>{{ analytics.headline.total_visits_30d }}</strong>
+                </div>
+                <div class="analytics-kpi">
+                    <div class="analytics-kpi-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 19V9"></path>
+                            <path d="M10 19v-4"></path>
+                            <path d="M16 19V5"></path>
+                            <path d="M22 19H2"></path>
+                        </svg>
+                    </div>
+                    <span>{{ analytics.labels.visits_7d }}</span>
+                    <strong>{{ analytics.headline.weekly_visits }}</strong>
+                </div>
+                <div class="analytics-kpi">
+                    <div class="analytics-kpi-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="9" cy="8" r="3"></circle>
+                            <path d="M3 19c0-3.3 2.7-6 6-6s6 2.7 6 6"></path>
+                            <path d="M16 5.5a3 3 0 0 1 0 5.5"></path>
+                            <path d="M17 13c2.3.7 4 2.8 4 5.3"></path>
+                        </svg>
+                    </div>
+                    <span>{{ analytics.labels.unique_visitors }}</span>
+                    <strong>{{ analytics.headline.unique_visitors_30d }}</strong>
+                </div>
+                <div class="analytics-kpi">
+                    <div class="analytics-kpi-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 7v5h-5"></path>
+                            <path d="M4 17v-5h5"></path>
+                            <path d="M6.1 9a7 7 0 0 1 11.7-2L20 9"></path>
+                            <path d="M17.9 15a7 7 0 0 1-11.7 2L4 15"></path>
+                        </svg>
+                    </div>
+                    <span>{{ analytics.labels.repeat_rate }}</span>
+                    <strong>{{ analytics.headline.repeat_rate }}%</strong>
+                </div>
+            </div>
+
+            {% set daily_scale = namespace(value=1) %}
+            {% for item in analytics.daily_views %}
+                {% if item.total > daily_scale.value %}
+                    {% set daily_scale.value = item.total %}
+                {% endif %}
+            {% endfor %}
+            {% set page_scale = namespace(value=1) %}
+            {% for item in analytics.top_pages %}
+                {% if item.total > page_scale.value %}
+                    {% set page_scale.value = item.total %}
+                {% endif %}
+            {% endfor %}
+
+            <div class="admin-analytics-tables">
+                <div class="admin-data-table analytics-daily-card">
+                    <div class="analytics-table-heading">
+                        <span class="analytics-table-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                                <path d="M8 3v4M16 3v4M3 10h18"></path>
+                            </svg>
+                        </span>
+                        <h4>{{ analytics.labels.daily_views }}</h4>
+                    </div>
+                    <div class="admin-data-list">
+                        {% set has_daily_views = namespace(value=false) %}
+                        {% for item in analytics.daily_views %}
+                            {% if item.total > 0 %}
+                                {% set has_daily_views.value = true %}
+                                <div class="admin-data-row">
+                                    <div class="admin-data-row-copy">
+                                        <span>{{ item.label }}</span>
+                                        <strong>{{ item.total }}</strong>
+                                    </div>
+                                    <meter
+                                        class="admin-row-meter"
+                                        min="0"
+                                        max="{{ daily_scale.value }}"
+                                        value="{{ item.total }}"
+                                        aria-label="{{ item.label }}: {{ item.total }}"
+                                    >{{ item.total }}</meter>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if not has_daily_views.value %}
+                            <div class="admin-empty-state">
+                                {{ {'vi': 'Chưa có lượt truy cập trong kỳ này.', 'en': 'No visits in this period yet.', 'ko': '이 기간의 방문 데이터가 아직 없습니다.'}[current_language] }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="admin-data-table analytics-pages-card">
+                    <div class="analytics-table-heading">
+                        <span class="analytics-table-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 4h16v16H4z"></path>
+                                <path d="M4 9h16"></path>
+                                <path d="M9 9v11"></path>
+                            </svg>
+                        </span>
+                        <h4>{{ analytics.labels.top_pages }}</h4>
+                    </div>
+                    <div class="admin-data-list">
+                        {% set has_top_pages = namespace(value=false) %}
+                        {% for item in analytics.top_pages %}
+                            {% if item.total > 0 %}
+                                {% set has_top_pages.value = true %}
+                                <div class="admin-data-row">
+                                    <div class="admin-data-row-copy">
+                                        <span>{{ item.path }}</span>
+                                        <strong>{{ item.total }}</strong>
+                                    </div>
+                                    <meter
+                                        class="admin-row-meter"
+                                        min="0"
+                                        max="{{ page_scale.value }}"
+                                        value="{{ item.total }}"
+                                        aria-label="{{ item.path }}: {{ item.total }}"
+                                    >{{ item.total }}</meter>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if not has_top_pages.value %}
+                            <div class="admin-empty-state">
+                                {{ {'vi': 'Chưa có trang nào được ghi nhận.', 'en': 'No page views have been recorded yet.', 'ko': '기록된 페이지 조회가 아직 없습니다.'}[current_language] }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="glass-card admin-roadmap-card">
+            <div class="admin-panel-heading">
+                <div>
+                    <span class="card-label">{{ t('dashboard_upgrade_eyebrow') }}</span>
+                    <h3>{{ t('dashboard_upgrade_title') }}</h3>
+                </div>
+            </div>
+            <div class="admin-roadmap-list">
+                {% for recommendation in recommendations %}
+                    <article class="admin-roadmap-item {{ recommendation.priority }}">
+                        <div>
+                            <strong>{{ recommendation.title }}</strong>
+                            <p>{{ recommendation.detail }}</p>
+                        </div>
+                        <span class="priority {{ recommendation.priority }}">{{ t('priority_' ~ recommendation.priority) }}</span>
+                    </article>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+</section>
+{% endblock %}

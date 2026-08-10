@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#31544c"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#173b35" flood-opacity="0.15"/>
+    </filter>
+    <style>
+      .title{font:700 36px 'Segoe UI',Arial,sans-serif;fill:#15384c}.sub{font:500 19px 'Segoe UI',Arial,sans-serif;fill:#526b79}
+      .h{font:700 24px 'Segoe UI',Arial,sans-serif;fill:#15384c}.t{font:500 19px 'Segoe UI',Arial,sans-serif;fill:#294753}
+      .small{font:500 17px 'Segoe UI',Arial,sans-serif;fill:#365863}.line{stroke:#31544c;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="980" fill="#ffffff"/>
+  <text x="800" y="58" text-anchor="middle" class="title">KIẾN TRÚC TỔNG THỂ HỆ THỐNG TOUCH VN</text>
+  <text x="800" y="91" text-anchor="middle" class="sub">Web portal, REST API, dịch vụ dùng chung và các nguồn dữ liệu tích hợp</text>
+
+  <g filter="url(#shadow)">
+    <rect x="55" y="210" width="255" height="150" rx="18" fill="#fff6dc" stroke="#d4af37" stroke-width="3"/>
+    <text x="182" y="263" text-anchor="middle" class="h">Khách du lịch</text>
+    <text x="182" y="299" text-anchor="middle" class="t">Trình duyệt / Mobile</text>
+    <text x="182" y="330" text-anchor="middle" class="small">VI · EN · KO</text>
+    <rect x="55" y="525" width="255" height="150" rx="18" fill="#e9f6ed" stroke="#168050" stroke-width="3"/>
+    <text x="182" y="579" text-anchor="middle" class="h">Quản trị viên</text>
+    <text x="182" y="615" text-anchor="middle" class="t">Dashboard quản trị</text>
+    <text x="182" y="646" text-anchor="middle" class="small">Nội dung · Analytics</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="410" y="145" width="345" height="245" rx="18" fill="#edf8fb" stroke="#3397bd" stroke-width="3"/>
+    <text x="582" y="195" text-anchor="middle" class="h">Flask Web Portal</text>
+    <text x="582" y="232" text-anchor="middle" class="t">Jinja2 · HTML · CSS · JavaScript</text>
+    <line x1="455" y1="258" x2="710" y2="258" stroke="#a8cad7" stroke-width="2"/>
+    <text x="582" y="293" text-anchor="middle" class="small">Địa điểm · Vé · Planner · Chi tiêu</text>
+    <text x="582" y="326" text-anchor="middle" class="small">Đăng nhập · Chat AI · AR/QR · Offline</text>
+    <text x="582" y="359" text-anchor="middle" class="small">Dashboard · Quản trị nội dung</text>
+
+    <rect x="410" y="485" width="345" height="210" rx="18" fill="#eef8ed" stroke="#48a45e" stroke-width="3"/>
+    <text x="582" y="538" text-anchor="middle" class="h">FastAPI REST API</text>
+    <text x="582" y="575" text-anchor="middle" class="t">Pydantic · OpenAPI · Bearer token</text>
+    <line x1="455" y1="600" x2="710" y2="600" stroke="#b7d6bd" stroke-width="2"/>
+    <text x="582" y="634" text-anchor="middle" class="small">API cho web/mobile và tích hợp ngoài</text>
+    <text x="582" y="666" text-anchor="middle" class="small">Validation · Rate limit · CORS</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="845" y="220" width="330" height="400" rx="18" fill="#f7faf8" stroke="#006b3f" stroke-width="4"/>
+    <text x="1010" y="273" text-anchor="middle" class="h">Lớp dịch vụ dùng chung</text>
+    <line x1="885" y1="298" x2="1135" y2="298" stroke="#a7c8b8" stroke-width="2"/>
+    <text x="1010" y="337" text-anchor="middle" class="t">Tourism Content Service</text>
+    <text x="1010" y="376" text-anchor="middle" class="t">AI Planner &amp; Chat Service</text>
+    <text x="1010" y="415" text-anchor="middle" class="t">Weather &amp; Nearby Service</text>
+    <text x="1010" y="454" text-anchor="middle" class="t">Ticket &amp; Booking Service</text>
+    <text x="1010" y="493" text-anchor="middle" class="t">Budget &amp; Expense Service</text>
+    <text x="1010" y="532" text-anchor="middle" class="t">Auth · i18n · Analytics</text>
+    <text x="1010" y="571" text-anchor="middle" class="t">Integration Gateways</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1265" y="145" width="275" height="235" rx="18" fill="#fff8e8" stroke="#d4af37" stroke-width="3"/>
+    <text x="1402" y="195" text-anchor="middle" class="h">Dịch vụ bên ngoài</text>
+    <text x="1402" y="237" text-anchor="middle" class="small">OpenAI (tùy chọn)</text>
+    <text x="1402" y="271" text-anchor="middle" class="small">Open-Meteo</text>
+    <text x="1402" y="305" text-anchor="middle" class="small">OSM / Overpass</text>
+    <text x="1402" y="339" text-anchor="middle" class="small">Google Maps · Ticket API</text>
+
+    <rect x="1265" y="510" width="275" height="185" rx="18" fill="#edf6f4" stroke="#287b6d" stroke-width="3"/>
+    <text x="1402" y="560" text-anchor="middle" class="h">SQLite Database</text>
+    <text x="1402" y="601" text-anchor="middle" class="small">Người dùng · Chuyến đi · Vé</text>
+    <text x="1402" y="635" text-anchor="middle" class="small">Chi tiêu · Chat · Nội dung</text>
+    <text x="1402" y="669" text-anchor="middle" class="small">Page views · Cấu hình</text>
+  </g>
+
+  <path class="line" d="M310 285 H410"/><path class="line" d="M310 600 H410"/>
+  <path class="line" d="M755 267 H845"/><path class="line" d="M755 590 H845"/>
+  <path class="line" d="M1175 340 H1265"/><path class="line" d="M1175 520 H1265"/>
+  <path class="line" d="M1265 585 H1175"/>
+
+  <rect x="410" y="785" width="1130" height="118" rx="16" fill="#f6f8f7" stroke="#7b948d" stroke-width="2"/>
+  <text x="975" y="827" text-anchor="middle" class="h">Lớp bảo mật và vận hành xuyên suốt</text>
+  <text x="975" y="865" text-anchor="middle" class="small">CSRF · CSP · phân quyền · băm mật khẩu · kiểm tra dữ liệu · rate limit · logging · xử lý lỗi · OWASP Top 10</text>
+  <path class="line" d="M1010 620 V785"/>
+</svg>

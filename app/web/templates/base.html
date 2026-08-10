@@ -1,0 +1,154 @@
+﻿<!doctype html>
+<html lang="{{ current_language or 'vi' }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b5d45">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ title or t('app_title') }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/{{ site_media.logo.format or 'svg' }}" href="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ app_meta.app_version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-synced.css') }}?v={{ app_meta.app_version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-production.css') }}?v={{ app_meta.app_version }}">
+</head>
+<body>
+    <div class="site-backdrop" aria-hidden="true"></div>
+    <div class="page-shell">
+        <header class="site-header">
+            <a href="{{ url_for('home') }}" class="brand-lockup" aria-label="{{ t('app_title') }}">
+                <img src="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}" alt="{{ t('brand_logo_alt') }}" class="brand-logo">
+                <div class="brand-copy">
+                    <span class="brand-mark">Touch!</span>
+                    <span class="brand-subtitle">{{ t('brand_subtitle') }}</span>
+                </div>
+            </a>
+
+            <button
+                class="mobile-nav-toggle"
+                type="button"
+                aria-label="{{ t('nav_menu_toggle') }}"
+                aria-controls="site-navigation"
+                aria-expanded="false"
+                data-nav-toggle
+            >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
+
+            <nav id="site-navigation" class="site-nav" aria-label="{{ t('main_nav_aria') }}" data-site-nav>
+                <a href="{{ url_for('home') }}" class="{{ 'active' if request.path == '/' else '' }}">{{ t('nav_home') }}</a>
+                <a href="{{ url_for('places') }}" class="{{ 'active' if request.path.startswith('/places') else '' }}">{{ t('nav_places') }}</a>
+                <a href="{{ url_for('tickets') }}" class="{{ 'active' if request.path.startswith('/tickets') else '' }}">{{ t('nav_tickets') }}</a>
+                <a href="{{ url_for('planner') }}" class="{{ 'active' if request.path.startswith('/planner') else '' }}">{{ t('nav_planner') }}</a>
+                <a href="{{ url_for('expenses') }}" class="{{ 'active' if request.path.startswith('/expenses') else '' }}">{{ t('nav_expenses') }}</a>
+                {% if logged_in_user %}
+                    <a href="{{ url_for('admin_dashboard' if is_admin_user else 'dashboard') }}" class="{{ 'active' if request.path.startswith('/dashboard') or request.path.startswith('/admin') else '' }}">{{ t('nav_dashboard') }}</a>
+                {% endif %}
+                <a href="{{ url_for('about') }}" class="{{ 'active' if request.path.startswith('/about') else '' }}">{{ t('nav_about') }}</a>
+            </nav>
+
+            <div class="header-tools">
+                <div class="language-menu" aria-label="{{ t('language_switch') }}">
+                    <img
+                        src="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}"
+                        alt="{{ t('brand_logo_alt') }}"
+                        class="language-globe"
+                    >
+                    {% for language in supported_languages %}
+                        <a
+                            href="{{ url_for('set_language', lang_code=language.code, next=request.full_path if request.query_string else request.path) }}"
+                            class="{{ 'active' if current_language == language.code else '' }}"
+                        >{{ language.code|upper }}</a>
+                    {% endfor %}
+                </div>
+
+                {% if logged_in_user %}
+                    <form action="{{ url_for('logout') }}" method="post" class="session-action-form">
+                        <button type="submit" class="login-button login-button-outline">{{ t('nav_logout') }}</button>
+                    </form>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="login-button">
+                        <span class="login-icon"></span>
+                        {{ t('nav_login') }}
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if logged_in_user %}
+                <form action="{{ url_for('logout') }}" method="post" class="session-action-form mobile-session-form">
+                    <button type="submit" class="mobile-session-action">{{ t('nav_logout') }}</button>
+                </form>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="mobile-session-action">{{ t('nav_login') }}</a>
+            {% endif %}
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <section class="flash-stack">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endwith %}
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+    </div>
+    <div
+        class="floating-chat"
+        data-floating-chat
+        data-chat-endpoint="{{ url_for('chat_support_api') }}"
+        data-chat-history-endpoint="{{ url_for('chat_history_api') }}"
+        data-chat-reset-endpoint="{{ url_for('chat_history_reset_api') }}"
+        data-loading-text="{{ t('chatbot_loading') }}"
+        data-error-text="{{ t('chatbot_error') }}"
+        data-empty-text="{{ t('chatbot_history_empty') }}"
+    >
+        <button class="floating-chat-backdrop is-hidden" type="button" data-chat-backdrop hidden aria-label="{{ t('chatbot_close') }}"></button>
+
+        <section class="floating-chat-panel is-hidden" data-chat-panel hidden aria-hidden="true" role="dialog" aria-label="{{ t('chatbot_header_title') }}">
+            <header class="floating-chat-header">
+                <div>
+                    <strong>{{ t('chatbot_header_title') }}</strong>
+                </div>
+                <div class="floating-chat-tools">
+                    <button class="ghost-button" type="button" data-chat-reset>{{ t('chatbot_reset') }}</button>
+                    <button class="ghost-button" type="button" data-chat-close aria-label="{{ t('chatbot_close') }}">x</button>
+                </div>
+            </header>
+
+            <div class="floating-chat-body" data-chat-history></div>
+
+            <div class="tag-row floating-chat-prompts">
+                {% for prompt in chat_quick_prompts %}
+                    <button class="chat-prompt" type="button" data-chat-question="{{ prompt.question }}">{{ prompt.label }}</button>
+                {% endfor %}
+            </div>
+
+            <form class="chatbot-form" data-chat-form>
+                <input class="chatbot-input" type="text" data-chat-input placeholder="{{ t('chat_prompt_itinerary_question') }}" autocomplete="off">
+                <button class="chatbot-submit" type="submit">{{ t('chatbot_submit') }}</button>
+            </form>
+            <p class="chat-status" data-chat-status></p>
+        </section>
+
+        <button class="chat-fab" type="button" data-chat-fab aria-expanded="false" aria-label="{{ t('chatbot_fab_label') }}">
+            <span class="chat-fab-icon">AI</span>
+            <span>{{ t('chatbot_fab_label') }}</span>
+        </button>
+    </div>
+    <script src="{{ url_for('static', filename='js/csrf.js') }}?v={{ app_meta.app_version }}"></script>
+    <script src="{{ url_for('static', filename='js/navigation.js') }}?v={{ app_meta.app_version }}"></script>
+    <script src="{{ url_for('static', filename='js/app-time.js') }}?v={{ app_meta.app_version }}"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}?v={{ app_meta.app_version }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

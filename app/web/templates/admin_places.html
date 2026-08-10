@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block content %}
+{% set form_place = selected_place.place if selected_place else None %}
+<section class="content-page admin-workspace">
+    <div class="page-intro">
+        <span class="eyebrow">Quản trị địa điểm</span>
+        <h1>Thêm, sửa, ẩn hoặc hiện địa điểm</h1>
+        <p>Dữ liệu điểm đến đang hiển thị trên web app có thể được cập nhật trực tiếp từ khu vực quản trị này.</p>
+    </div>
+
+    <section class="two-column admin-main-grid">
+        <article class="glass-card">
+            <div class="section-heading">
+                <span class="eyebrow">Cập nhật địa điểm</span>
+                <h2>Thông tin chi tiết</h2>
+            </div>
+            <form method="post" enctype="multipart/form-data" class="admin-place-form">
+                <input type="hidden" name="place_id" value="{{ form_place.id if form_place else '' }}">
+                <div class="planner-grid">
+                    <div class="form-field">
+                        <label for="place_id_display">Mã địa điểm</label>
+                        <input id="place_id_display" value="{{ form_place.id if form_place else '' }}" disabled>
+                    </div>
+                    <div class="form-field">
+                        <label for="name">Tên địa điểm</label>
+                        <input id="name" name="name" value="{{ form_place.name if form_place else '' }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="region">Miền</label>
+                        <select id="region" name="region" required>
+                            {% for option in region_options %}
+                                <option value="{{ option.code }}" {% if form_place and form_place.region == option.code %}selected{% endif %}>{{ option.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="province">Tỉnh / thành phố</label>
+                        <input id="province" name="province" value="{{ form_place.province if form_place else '' }}" required>
+                    </div>
+                    <div class="form-field grow">
+                        <label for="description">Mô tả ngắn</label>
+                        <input id="description" name="description" value="{{ form_place.description if form_place else '' }}" required>
+                    </div>
+                    <div class="form-field grow">
+                        <label for="highlights_text">Điểm nhấn (tách bằng dấu phẩy)</label>
+                        <input id="highlights_text" name="highlights_text" value="{{ form_place.highlights|join(', ') if form_place else '' }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="ticket_price">Giá vé</label>
+                        <input id="ticket_price" name="ticket_price" type="number" min="0" value="{{ form_place.ticket_price if form_place else 0 }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="avg_spend">Chi phí trung bình</label>
+                        <input id="avg_spend" name="avg_spend" type="number" min="0" value="{{ form_place.avg_spend if form_place else 0 }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="rating">Đánh giá</label>
+                        <input id="rating" name="rating" type="number" min="0" max="5" step="0.1" value="{{ form_place.rating if form_place else 4.5 }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="must_go_score">Điểm must-go</label>
+                        <input id="must_go_score" name="must_go_score" type="number" min="0" max="100" value="{{ form_place.must_go_score if form_place else 90 }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="lat">Vĩ độ</label>
+                        <input id="lat" name="lat" type="number" step="0.0001" value="{{ form_place.coordinate.lat if form_place else 16.0471 }}" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="lng">Kinh độ</label>
+                        <input id="lng" name="lng" type="number" step="0.0001" value="{{ form_place.coordinate.lng if form_place else 108.2068 }}" required>
+                    </div>
+                    <div class="form-field grow">
+                        <label for="nearby_services_text">Tiện ích lân cận (tách bằng dấu phẩy)</label>
+                        <input id="nearby_services_text" name="nearby_services_text" value="{{ form_place.nearby_services|join(', ') if form_place else '' }}" required>
+                    </div>
+                    <div class="form-field grow">
+                        <label for="image_hint">Mô tả hình ảnh</label>
+                        <input id="image_hint" name="image_hint" value="{{ form_place.image_hint if form_place else '' }}">
+                    </div>
+                </div>
+
+                <div class="media-preview-card">
+                    <span class="card-label">Hình ảnh địa điểm</span>
+                    <img
+                        src="{{ url_for('static', filename=selected_place.image.path if selected_place else 'img/places/default-destination.svg') }}"
+                        alt="{{ form_place.name if form_place else 'Địa điểm' }}"
+                        class="admin-media-preview admin-media-preview-place"
+                    >
+                    <div class="planner-grid compact-grid">
+                        <div class="form-field grow">
+                            <label for="image_file">Tải lên ảnh địa điểm</label>
+                            <input id="image_file" name="image_file" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,.gif">
+                        </div>
+                        <div class="form-field">
+                            <label for="image_output_format">Định dạng đầu ra</label>
+                            <select id="image_output_format" name="image_output_format">
+                                <option value="png">PNG</option>
+                                <option value="jpg">JPG</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="check-line">
+                        <input type="checkbox" name="remove_place_image">
+                        Xóa hình ảnh tùy chỉnh hiện tại
+                    </label>
+                    {% if selected_place and selected_place.image %}
+                        <small class="meta-line">
+                            Định dạng hiện tại: {{ selected_place.image.format|upper if selected_place.image.format else 'N/A' }}
+                            {% if selected_place.image.has_custom %}&bull; Ảnh tùy chỉnh{% else %}&bull; Ảnh mặc định{% endif %}
+                        </small>
+                    {% endif %}
+                </div>
+
+                <div class="admin-option-section">
+                    <span class="card-label">Nhóm đặc trưng</span>
+                    <div class="dashboard-toggle-grid">
+                        {% for option in category_options %}
+                            <label class="dashboard-toggle-item">
+                                <input type="checkbox" name="categories" value="{{ option.code }}" {% if form_place and option.code in form_place.categories %}checked{% endif %}>
+                                <span>{{ option.label }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="admin-option-section">
+                    <span class="card-label">Phương tiện hỗ trợ</span>
+                    <div class="dashboard-toggle-grid">
+                        {% for option in transport_options %}
+                            <label class="dashboard-toggle-item">
+                                <input type="checkbox" name="transport_modes" value="{{ option.code }}" {% if form_place and option.code in form_place.transport_modes %}checked{% endif %}>
+                                <span>{{ option.label }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="inline-actions">
+                    <button class="button primary" type="submit">Lưu địa điểm</button>
+                    <a class="button secondary" href="{{ url_for('admin_places') }}">Tạo địa điểm mới</a>
+                </div>
+
+                <div class="upload-note">
+                    {% if image_conversion_available %}
+                        Hệ thống có thể chuyển đổi ảnh tải lên về JPG hoặc PNG.
+                    {% else %}
+                        Hệ thống hiện nhận trực tiếp JPG/PNG. Muốn chuyển đổi từ WEBP, BMP hoặc GIF cần cài đặt Pillow.
+                    {% endif %}
+                </div>
+            </form>
+        </article>
+
+        <article class="glass-card">
+            <div class="section-heading">
+                <span class="eyebrow">Danh sách hiện tại</span>
+                <h2>Địa điểm đang quản lý</h2>
+            </div>
+            <div class="stack-list">
+                {% for item in admin_places %}
+                    <div class="stack-row stack-row-card">
+                        <img
+                            src="{{ url_for('static', filename=item.image.path) }}"
+                            alt="{{ item.place.name }}"
+                            class="admin-thumb"
+                        >
+                        <div>
+                            <strong>{{ item.place.name }}</strong>
+                            <p>{{ item.place.province }} &bull; {{ item.source_label }} &bull; {{ item.status_label }}</p>
+                            <small class="meta-line">
+                                {{ item.place.id }}
+                                {% if item.image.has_custom %}&bull; Ảnh tùy chỉnh{% endif %}
+                            </small>
+                        </div>
+                        <div class="mini-actions">
+                            <a class="text-link" href="{{ url_for('admin_places', place_id=item.place.id) }}">Chỉnh sửa</a>
+                            <form method="post" action="{{ url_for('admin_place_visibility', place_id=item.place.id) }}">
+                                <input type="hidden" name="action" value="{{ 'hide' if item.is_active else 'show' }}">
+                                <button class="text-link button-link" type="submit">
+                                    {{ 'Ẩn' if item.is_active else 'Hiện lại' }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+</section>
+{% endblock %}

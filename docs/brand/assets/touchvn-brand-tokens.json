@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "brand": "Touch VN",
+    "version": "1.0",
+    "effectiveDate": "2026-08-03"
+  },
+  "color": {
+    "green": "#0B5D45",
+    "greenDark": "#074232",
+    "greenSoft": "#E7F3EB",
+    "gold": "#B7831F",
+    "goldLight": "#F4C45D",
+    "ink": "#162B22",
+    "muted": "#66746D",
+    "canvas": "#F5F7F4",
+    "surface": "#FFFFFF",
+    "border": "#DCE5DE",
+    "danger": "#B5463B",
+    "decorative": {
+      "sky": "#7BDFF2",
+      "sunrise": "#FFD6A5",
+      "lime": "#9BE564"
+    }
+  },
+  "font": {
+    "display": [
+      "Playfair Display",
+      "Georgia",
+      "serif"
+    ],
+    "body": [
+      "Inter",
+      "Segoe UI",
+      "Arial",
+      "sans-serif"
+    ],
+    "displayWeights": [
+      600,
+      700,
+      800
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600,
+      700,
+      800
+    ]
+  },
+  "radiusPx": {
+    "sm": 14,
+    "md": 18,
+    "lg": 24,
+    "xl": 30
+  },
+  "spacingPx": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64
+  ],
+  "motionMs": {
+    "fast": 150,
+    "standard": 240
+  },
+  "tagline": "Chạm Việt Nam, mở ra bản sắc văn hóa Việt."
+}

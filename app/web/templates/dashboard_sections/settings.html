@@ -1,0 +1,18 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_settings_label') }}</span>
+    <h3>{{ t('dashboard_settings_title') }}</h3>
+    <div class="stack-list">
+        <div class="stack-row">
+            <strong>{{ t('dashboard_setting_language') }}</strong>
+            <p>{% for language in languages %}<span class="pill">{{ language.label }}</span>{% endfor %}</p>
+        </div>
+        <div class="stack-row">
+            <strong>{{ t('dashboard_setting_theme') }}</strong>
+            <p>{{ t('dashboard_setting_theme_value') }}</p>
+        </div>
+        <div class="stack-row">
+            <strong>{{ t('dashboard_setting_maps') }}</strong>
+            <p>{{ t('dashboard_setting_maps_value') }}</p>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block content %}
+{% set form_item = selected_recommendation %}
+<section class="content-page admin-workspace admin-recommendations-page">
+    <div class="admin-dashboard-header">
+        <div class="admin-dashboard-heading">
+            <span class="eyebrow">{{ t('adminrec_manage_eyebrow') }}</span>
+            <h1>{{ t('adminrec_manage_title') }}</h1>
+        </div>
+        <div class="admin-dashboard-status">
+            <span class="admin-role-pill">{{ admin_recommendation_rows|length }} items</span>
+            <a class="admin-panel-link" href="{{ url_for('admin_recommends') }}">{{ t('adminrec_create_new') }}</a>
+        </div>
+    </div>
+
+    <section class="admin-recommendation-layout">
+        <article class="glass-card admin-recommendation-list-card">
+            <div class="admin-panel-heading">
+                <div>
+                    <span class="card-label">{{ t('adminrec_list_label') }}</span>
+                    <h3>{{ t('adminrec_list_title') }}</h3>
+                </div>
+            </div>
+
+            {% if admin_recommendation_rows %}
+                <div class="admin-recommendation-list">
+                    {% for item in admin_recommendation_rows %}
+                        <article class="admin-recommendation-row {{ 'is-hidden' if not item.is_active else '' }}">
+                            <div class="admin-recommendation-main">
+                                <div class="admin-recommendation-titleline">
+                                    <span class="priority {{ item.priority }}">{{ t('priority_' ~ item.priority) }}</span>
+                                    <strong>{{ item.title }}</strong>
+                                </div>
+                                <p>{{ item.detail }}</p>
+                                <small class="meta-line">
+                                    {{ t('adminrec_field_display_order') }}: {{ item.display_order }}
+                                    &bull; {{ t('adminrec_status_active') if item.is_active else t('adminrec_status_hidden') }}
+                                </small>
+                            </div>
+                            <div class="admin-row-actions">
+                                <a class="text-link" href="{{ url_for('admin_recommends', recommendation_id=item.id) }}">{{ t('adminrec_edit') }}</a>
+                                <form method="post" action="{{ url_for('admin_recommendation_visibility', recommendation_id=item.id) }}">
+                                    <input type="hidden" name="action" value="{{ 'hide' if item.is_active else 'show' }}">
+                                    <button class="text-link button-link" type="submit">
+                                        {{ t('adminrec_hide') if item.is_active else t('adminrec_show') }}
+                                    </button>
+                                </form>
+                                <form method="post" action="{{ url_for('admin_recommendation_delete', recommendation_id=item.id) }}">
+                                    <button class="text-link button-link danger-link" type="submit">{{ t('adminrec_delete') }}</button>
+                                </form>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <article class="empty-card">
+                    <h3>{{ t('adminrec_list_title') }}</h3>
+                    <p>{{ t('adminrec_empty') }}</p>
+                </article>
+            {% endif %}
+        </article>
+
+        <aside class="glass-card admin-recommendation-editor-card">
+            <div class="admin-panel-heading">
+                <div>
+                    <span class="card-label">{{ t('adminrec_form_label') }}</span>
+                    <h3>{{ t('adminrec_form_title') }}</h3>
+                </div>
+            </div>
+
+            <form method="post" class="admin-place-form admin-recommendation-form">
+                <input type="hidden" name="recommendation_id" value="{{ form_item.id if form_item else '' }}">
+
+                <div class="planner-grid admin-recommendation-meta">
+                    <div class="form-field">
+                        <label for="priority">{{ t('adminrec_field_priority') }}</label>
+                        <select id="priority" name="priority" required>
+                            {% for option in priority_options %}
+                                <option value="{{ option.code }}" {% if (form_item.priority if form_item else 'medium') == option.code %}selected{% endif %}>{{ option.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="display_order">{{ t('adminrec_field_display_order') }}</label>
+                        <input id="display_order" name="display_order" type="number" min="0" value="{{ form_item.display_order if form_item else 0 }}" required>
+                    </div>
+                </div>
+
+                <div class="admin-lang-tabs">
+                    <section class="admin-option-section">
+                        <span class="card-label">VI</span>
+                        <div class="form-field">
+                            <label for="title_vi">{{ t('adminrec_field_title_vi') }}</label>
+                            <input id="title_vi" name="title_vi" value="{{ form_item.title_vi if form_item else '' }}" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="detail_vi">{{ t('adminrec_field_detail_vi') }}</label>
+                            <textarea id="detail_vi" name="detail_vi" rows="4" required>{{ form_item.detail_vi if form_item else '' }}</textarea>
+                        </div>
+                    </section>
+
+                    <section class="admin-option-section">
+                        <span class="card-label">EN</span>
+                        <div class="form-field">
+                            <label for="title_en">{{ t('adminrec_field_title_en') }}</label>
+                            <input id="title_en" name="title_en" value="{{ form_item.title_en if form_item else '' }}">
+                        </div>
+                        <div class="form-field">
+                            <label for="detail_en">{{ t('adminrec_field_detail_en') }}</label>
+                            <textarea id="detail_en" name="detail_en" rows="4">{{ form_item.detail_en if form_item else '' }}</textarea>
+                        </div>
+                    </section>
+
+                    <section class="admin-option-section">
+                        <span class="card-label">KO</span>
+                        <div class="form-field">
+                            <label for="title_ko">{{ t('adminrec_field_title_ko') }}</label>
+                            <input id="title_ko" name="title_ko" value="{{ form_item.title_ko if form_item else '' }}">
+                        </div>
+                        <div class="form-field">
+                            <label for="detail_ko">{{ t('adminrec_field_detail_ko') }}</label>
+                            <textarea id="detail_ko" name="detail_ko" rows="4">{{ form_item.detail_ko if form_item else '' }}</textarea>
+                        </div>
+                    </section>
+                </div>
+
+                <label class="check-line">
+                    <input type="checkbox" name="is_active" {% if not form_item or form_item.is_active %}checked{% endif %}>
+                    {{ t('adminrec_field_is_active') }}
+                </label>
+
+                <div class="inline-actions">
+                    <button class="button primary" type="submit">{{ t('adminrec_submit') }}</button>
+                    <a class="button secondary" href="{{ url_for('admin_recommends') }}">{{ t('adminrec_create_new') }}</a>
+                </div>
+            </form>
+        </aside>
+    </section>
+</section>
+{% endblock %}

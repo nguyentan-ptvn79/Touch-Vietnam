@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-page tickets-booking-page">
+    <header class="page-intro">
+        <span class="eyebrow">{{ t('tickets_eyebrow') }}</span>
+        <h1>{{ t('tickets_title') }}</h1>
+        <p>{{ t('tickets_intro') }}</p>
+    </header>
+
+    <form action="{{ url_for('tickets') }}" method="get" class="ticket-strip-form tickets-page-form ticket-search-form booking-search-panel">
+        <label class="ticket-field">
+            <span>{{ t('tickets_origin') }}</span>
+            <input type="text" name="origin" value="{{ origin }}" autocomplete="address-level2" required>
+        </label>
+        <label class="ticket-field">
+            <span>{{ t('tickets_destination') }}</span>
+            <input type="text" name="destination" value="{{ destination }}" autocomplete="address-level2" required>
+        </label>
+        <label class="ticket-field">
+            <span>{{ t('tickets_vehicle') }}</span>
+            <select name="vehicle_type">
+                {% if vehicle_options is defined %}
+                    {% for option in vehicle_options %}
+                        <option value="{{ option.code }}" {{ 'selected' if selected_vehicle == option.code else '' }}>{{ option.label }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="plane" {{ 'selected' if vehicle_type == 'plane' else '' }}>{{ t('transport_plane') }}</option>
+                    <option value="train" {{ 'selected' if vehicle_type == 'train' else '' }}>{{ t('transport_train') }}</option>
+                    <option value="bus" {{ 'selected' if vehicle_type == 'bus' else '' }}>{{ t('transport_bus') }}</option>
+                    <option value="entertainment" {{ 'selected' if vehicle_type == 'entertainment' else '' }}>{{ t('tickets_vehicle_entertainment') }}</option>
+                {% endif %}
+            </select>
+        </label>
+        <label class="ticket-field">
+            <span>{{ t('tickets_departure_date') }}</span>
+            <input type="date" name="departure_date" value="{{ departure_date }}" min="{{ current_time_iso[:10] }}">
+        </label>
+        <label class="ticket-field compact-ticket-field">
+            <span>{{ t('tickets_passengers') }}</span>
+            <input type="number" name="passengers" value="{{ passengers }}" min="1" max="20">
+        </label>
+        <button type="submit" class="button ticket-submit">{{ t('tickets_search') }}</button>
+    </form>
+
+    {% if searched %}
+        <section class="booking-results-section">
+            <div class="booking-results-heading">
+                <div>
+                    <span class="eyebrow">{{ t('tickets_attraction_results_label') if selected_vehicle == 'entertainment' else t('tickets_results_label') }}</span>
+                    <h2>{{ destination }}</h2>
+                </div>
+                {% if offers %}
+                    <strong>{{ t('tickets_option_count', count=offers|length) }}</strong>
+                {% endif %}
+            </div>
+
+            <div class="ticket-results-list">
+                {% if offers %}
+                    {% for offer in offers %}
+                    <article class="ticket-offer-card {{ 'attraction-offer-card' if offer.vehicle_type == 'entertainment' else '' }}">
+                        <div class="ticket-offer-main">
+                            <span class="ticket-provider">{{ offer.provider }}</span>
+                            {% if offer.vehicle_type == 'entertainment' %}
+                                <h3>{{ offer.destination }}</h3>
+                                <p>{{ t('tickets_attraction_at', place=offer.origin) }}</p>
+                            {% else %}
+                                <h3>{{ offer.origin }} → {{ offer.destination }}</h3>
+                                <p>{{ offer.seat_class or t('tickets_economy_class') }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="ticket-offer-meta">
+                            <div>
+                                <span>{{ t('tickets_time_slot') if offer.vehicle_type == 'entertainment' else t('tickets_departure_time') }}</span>
+                                <strong>{{ offer.departure }}</strong>
+                            </div>
+                            <div>
+                                <span>{{ t('tickets_duration') }}</span>
+                                <strong>{{ offer.duration or t('tickets_flexible') }}</strong>
+                            </div>
+                            <div>
+                                <span>{{ t('tickets_departure_date') }}</span>
+                                <strong>{{ offer.departure_date or departure_date }}</strong>
+                            </div>
+                        </div>
+
+                        {% if offer.operator_note %}
+                            <p class="ticket-result-note">{{ offer.operator_note }}</p>
+                        {% endif %}
+
+                        <div class="ticket-offer-price">
+                            <span>{{ t('tickets_price_from') }}</span>
+                            <strong>{{ offer.price|currency }}</strong>
+                            <a href="{{ offer.booking_url }}" class="button secondary" target="_blank" rel="noopener noreferrer">{{ t('tickets_book_now') }}</a>
+                            {% if not logged_in_user %}
+                                <small><a class="text-link" href="{{ url_for('login') }}">{{ t('nav_login') }}</a> {{ t('tickets_login_to_book') }}</small>
+                            {% endif %}
+                        </div>
+
+                        {% if logged_in_user %}
+                            <form method="post" class="ticket-booking-form">
+                                <input type="hidden" name="action" value="book">
+                                <input type="hidden" name="provider" value="{{ offer.provider }}">
+                                <input type="hidden" name="vehicle_type" value="{{ offer.vehicle_type }}">
+                                <input type="hidden" name="origin" value="{{ offer.origin }}">
+                                <input type="hidden" name="destination" value="{{ offer.destination }}">
+                                <input type="hidden" name="departure_date" value="{{ offer.departure_date or departure_date }}">
+                                <input type="hidden" name="departure_time" value="{{ offer.departure }}">
+                                <input type="hidden" name="arrival_time" value="{{ offer.arrival or '' }}">
+                                <input type="hidden" name="seat_class" value="{{ offer.seat_class or '' }}">
+                                <input type="hidden" name="amount" value="{{ offer.price }}">
+                                <input type="hidden" name="search_origin" value="{{ origin }}">
+                                <input type="hidden" name="search_destination" value="{{ destination }}">
+                                <input type="hidden" name="search_vehicle_type" value="{{ selected_vehicle }}">
+                                <input type="hidden" name="search_departure_date" value="{{ departure_date }}">
+                                <input type="hidden" name="search_passengers" value="{{ passengers }}">
+                                <div class="ticket-booking-grid">
+                                    <label>
+                                        <span>{{ t('tickets_contact_name') }}</span>
+                                        <input name="contact_name" value="{{ logged_in_user }}" required>
+                                    </label>
+                                    <label>
+                                        <span>{{ t('tickets_contact_email') }}</span>
+                                        <input type="email" name="contact_email" required>
+                                    </label>
+                                    <label>
+                                        <span>{{ t('tickets_contact_phone') }}</span>
+                                        <input name="contact_phone" required>
+                                    </label>
+                                </div>
+                                <button class="button primary" type="submit">{{ t('tickets_reserve_now') }}</button>
+                            </form>
+                        {% endif %}
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <article class="simple-card simple-card-wide">
+                        <span class="eyebrow">{{ t('tickets_no_result_label') }}</span>
+                        <h3>{{ t('tickets_no_result_title') }}</h3>
+                        <p>{{ t('tickets_empty') }}</p>
+                    </article>
+                {% endif %}
+            </div>
+        </section>
+    {% endif %}
+
+    {% if latest_booking %}
+        <section class="glass-card">
+            <span class="card-label">{{ t('tickets_recent_bookings_label') }}</span>
+            <h3>{{ t('booking_success', reference=latest_booking.booking_reference) }}</h3>
+            <p>{{ latest_booking.provider }} - {{ latest_booking.origin }} → {{ latest_booking.destination }}</p>
+        </section>
+    {% endif %}
+
+    {% if recent_bookings %}
+        <section class="glass-card">
+            <span class="card-label">{{ t('tickets_recent_bookings_label') }}</span>
+            <h3>{{ t('tickets_recent_bookings_title') }}</h3>
+            <div class="stack-list">
+                {% for booking in recent_bookings %}
+                    <div class="stack-row">
+                        <strong>{{ booking.booking_reference }}</strong>
+                        <span>{{ booking.vehicle_label }} • {{ booking.status_label }}</span>
+                        <p>{{ booking.origin }} → {{ booking.destination }} • {{ booking.amount|currency }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</section>
+{% endblock %}

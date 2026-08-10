@@ -1,0 +1,34 @@
+<article class="glass-card dashboard-controls-panel">
+    <div class="dashboard-controls-heading">
+        <div>
+            <span class="card-label">{{ t('dashboard_admin_controls_label') }}</span>
+            <h3>{{ t('dashboard_admin_controls_title') }}</h3>
+        </div>
+        <span class="dashboard-controls-count">{{ dashboard_block_controls|length }} module</span>
+    </div>
+
+    <form method="post" action="{{ url_for('dashboard_layout_settings') }}" class="dashboard-control-form">
+        <div class="dashboard-module-grid">
+            {% for block in dashboard_block_controls %}
+                <label class="dashboard-module-card">
+                    <input
+                        class="dashboard-module-input"
+                        type="checkbox"
+                        name="visible_blocks"
+                        value="{{ block.key }}"
+                        {% if block.visible %}checked{% endif %}
+                    >
+                    <span class="dashboard-module-top">
+                        <span class="dashboard-module-icon">{{ block.key[:2]|upper }}</span>
+                        <span class="dashboard-module-switch" aria-hidden="true"></span>
+                    </span>
+                    <span class="dashboard-module-title">{{ block.title }}</span>
+                </label>
+            {% endfor %}
+        </div>
+
+        <div class="dashboard-controls-footer">
+            <button class="button primary" type="submit">{{ t('dashboard_admin_controls_submit') }}</button>
+        </div>
+    </form>
+</article>

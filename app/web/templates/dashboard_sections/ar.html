@@ -1,0 +1,13 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_ar_label') }}</span>
+    <h3>{{ t('dashboard_ar_title') }}</h3>
+    <div class="stack-list">
+        {% for item in ar_landmarks %}
+            <div class="stack-row">
+                <strong>{{ item.name }}</strong>
+                <span>{{ item.province }}</span>
+                <p>{{ item.note }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</article>

@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-page">
+    <header class="page-intro">
+        <span class="eyebrow">{{ t('planner_eyebrow') }}</span>
+        <h1>{{ t('planner_title') }}</h1>
+        <p>{{ t('planner_intro') }}</p>
+    </header>
+
+    <section class="glass-card planner-form-card">
+        <div class="admin-panel-heading">
+            <div>
+                <span class="card-label">{{ t('planner_form_label') }}</span>
+                <h2>{{ t('planner_form_title') }}</h2>
+            </div>
+        </div>
+
+        <form class="planner-grid planner-surface" method="post">
+            <div class="form-field">
+                <label for="departure_city">{{ t('planner_departure_city') }}</label>
+                <input id="departure_city" name="departure_city" value="{{ t('default_departure_city') }}" required>
+            </div>
+            <div class="form-field">
+                <label for="destination">{{ t('planner_destination') }}</label>
+                <input id="destination" name="destination" placeholder="{{ t('planner_destination_placeholder') }}" required>
+            </div>
+            <div class="form-field">
+                <label for="region">{{ t('planner_region') }}</label>
+                <select id="region" name="region">
+                    <option value="">{{ t('planner_region_auto') }}</option>
+                    {% for region in regions %}
+                        <option value="{{ region.code }}">{{ region.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="days">{{ t('planner_days') }}</label>
+                <input id="days" type="number" name="days" value="3" min="1" max="14" required>
+            </div>
+            <div class="form-field">
+                <label for="travelers">{{ t('planner_travelers') }}</label>
+                <input id="travelers" type="number" name="travelers" value="2" min="1" max="20" required>
+            </div>
+            <div class="form-field">
+                <label for="budget">{{ t('planner_budget') }}</label>
+                <input id="budget" type="number" name="budget" value="4500000" min="0" step="50000" required>
+            </div>
+            <div class="form-field">
+                <label for="transport_mode">{{ t('planner_transport_mode') }}</label>
+                <select id="transport_mode" name="transport_mode">
+                    <option value="plane">{{ t('transport_plane') }}</option>
+                    <option value="train">{{ t('transport_train') }}</option>
+                    <option value="bus">{{ t('transport_bus') }}</option>
+                    <option value="car">{{ t('transport_car') }}</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="accommodation_level">{{ t('planner_accommodation') }}</label>
+                <select id="accommodation_level" name="accommodation_level">
+                    <option value="budget">{{ t('stay_budget') }}</option>
+                    <option value="midrange" selected>{{ t('stay_midrange') }}</option>
+                    <option value="premium">{{ t('stay_premium') }}</option>
+                </select>
+            </div>
+            <div class="form-field grow">
+                <label for="interests">{{ t('planner_interests') }}</label>
+                <input id="interests" name="interests" placeholder="{{ t('planner_interests_placeholder') }}">
+            </div>
+
+            <div class="planner-form-actions">
+                <label class="check-line">
+                    <input type="checkbox" name="include_tickets" checked>
+                    {{ t('planner_include_tickets') }}
+                </label>
+                <button class="button primary" type="submit">{{ t('planner_submit') }}</button>
+            </div>
+        </form>
+    </section>
+
+    {% if itinerary or budget or nearby_from_user_location %}
+        <section class="two-column planner-support-grid">
+            {% if itinerary or nearby_from_user_location %}
+                <article class="glass-card">
+                    <span class="card-label">{{ t('planner_nearby_label') }}</span>
+                    <h3>{{ t('planner_nearby_title') }}</h3>
+                    <p class="planner-card-intro">
+                        {{ t('planner_nearby_user_location_active') if nearby_from_user_location else t('planner_nearby_user_location_intro') }}
+                    </p>
+                    <button
+                        class="button secondary"
+                        type="button"
+                        data-nearby-location
+                        data-target-url="{{ url_for('planner') }}"
+                        data-loading-text="{{ t('planner_nearby_location_loading') }}"
+                        data-error-text="{{ t('planner_nearby_location_error') }}"
+                    >{{ t('planner_nearby_location_button') }}</button>
+                    <p class="chat-status" data-nearby-location-status></p>
+                    <div class="stack-list">
+                        {% for item in nearby_services %}
+                            {% set service_type =
+                                t('service_type_stay') if item.kind in ['hotel', 'resort', 'homestay'] else
+                                t('service_type_medical') if item.kind in ['pharmacy', 'drugstore', 'hospital', 'first-aid'] else
+                                t('service_type_food') if item.kind in ['restaurant', 'cafe', 'night-market'] else
+                                t('service_type_shopping') if item.kind in ['market', 'supermarket', 'convenience-store'] else
+                                t('service_type_entertainment') if item.kind in ['theme-park'] else
+                                t('service_type_utility')
+                            %}
+                            <div class="nearby-detail-row">
+                                <div class="nearby-detail-main">
+                                    <span class="nearby-type">{{ service_type }}</span>
+                                    <strong>{{ item.name }}</strong>
+                                </div>
+                                <div class="nearby-detail-meta">
+                                    <span><small>{{ t('planner_nearby_distance') }}</small>{{ item.distance_km }} km</span>
+                                    <span><small>{{ t('planner_nearby_area') }}</small>{{ item.province }}</span>
+                                </div>
+                                <p>{{ item.note }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </article>
+            {% endif %}
+
+            {% if budget %}
+            <article class="glass-card">
+                <span class="card-label">{{ t('planner_budget_label') }}</span>
+                <h3>{{ t('planner_budget_title') }}</h3>
+                {% set traveler_count = request.form.get('travelers', 1)|int %}
+                <p class="planner-card-intro">{{ t('planner_budget_people_intro', count=traveler_count) }}</p>
+                <div class="budget-grid budget-detail-grid">
+                    <div><span>{{ t('planner_cost_transport') }}</span><strong>{{ budget.transport|currency }}</strong><small>{{ t('planner_cost_transport_note') }}</small></div>
+                    <div><span>{{ t('planner_cost_stay') }}</span><strong>{{ budget.stay|currency }}</strong><small>{{ t('planner_cost_stay_note') }}</small></div>
+                    <div><span>{{ t('planner_cost_food') }}</span><strong>{{ budget.food|currency }}</strong><small>{{ t('planner_cost_food_note') }}</small></div>
+                    <div><span>{{ t('planner_cost_ticket') }}</span><strong>{{ budget.attraction_tickets|currency }}</strong><small>{{ t('planner_cost_ticket_note') }}</small></div>
+                    <div><span>{{ t('planner_cost_emergency') }}</span><strong>{{ budget.emergency_fund|currency }}</strong><small>{{ t('planner_cost_emergency_note') }}</small></div>
+                    <div class="highlight"><span>{{ t('planner_cost_total') }}</span><strong>{{ budget.total|currency }}</strong><small>{{ t('planner_cost_average', amount=(budget.total / traveler_count)|currency) }}</small></div>
+                </div>
+                <p>{{ budget.note }}</p>
+            </article>
+            {% endif %}
+        </section>
+    {% endif %}
+
+    {% if itinerary %}
+        <section class="section-block">
+            <div class="section-heading">
+                <span class="eyebrow">{{ t('planner_itinerary_eyebrow') }}</span>
+                <h2>{{ itinerary.destination }}</h2>
+                <span class="pill" data-generation-mode="{{ itinerary.generation_mode }}">
+                    {{ t('planner_generation_openai') if itinerary.generation_mode == 'openai' else t('planner_generation_fallback') }}
+                </span>
+            </div>
+            <div class="itinerary-grid">
+                {% for day in itinerary.days %}
+                    <article class="plan-card">
+                        <span class="day-chip">{{ t('planner_day_label', day=day.day) }}</span>
+                        <h3>{{ day.title }}</h3>
+                        <p><strong>{{ t('planner_morning') }}:</strong> {{ day.morning }}</p>
+                        <p><strong>{{ t('planner_afternoon') }}:</strong> {{ day.afternoon }}</p>
+                        <p><strong>{{ t('planner_evening') }}:</strong> {{ day.evening }}</p>
+                        <strong>{{ day.estimated_cost|currency }}</strong>
+                    </article>
+                {% endfor %}
+            </div>
+            <div class="tips-card">
+                <h3>{{ t('planner_notes_title') }}</h3>
+                <ul class="mini-list">
+                    {% for tip in itinerary.travel_tips %}
+                        <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+                <strong>{{ t('planner_total_title') }}: {{ itinerary.total_estimated_cost|currency }}</strong>
+            </div>
+        </section>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/planner-nearby.js') }}?v={{ app_meta.app_version }}"></script>
+{% endblock %}

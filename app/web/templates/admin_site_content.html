@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-page admin-workspace admin-site-content-page">
+    <div class="admin-dashboard-header">
+        <div class="admin-dashboard-heading">
+            <span class="eyebrow">Quản trị nội dung</span>
+            <h1>Thông tin website</h1>
+            <p>Cập nhật nhận diện thương hiệu, thông tin hỗ trợ và tài nguyên hình ảnh đang hiển thị trên giao diện.</p>
+        </div>
+        <div class="admin-dashboard-status">
+            <span class="admin-role-pill">Website settings</span>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="admin-site-form">
+        <section class="glass-card admin-site-section">
+            <div class="admin-panel-heading">
+                <div>
+                    <span class="card-label">Thông tin thương hiệu</span>
+                    <h3>Nội dung hiển thị chung</h3>
+                </div>
+            </div>
+
+            <div class="admin-site-fields">
+                <div class="form-field">
+                    <label for="brand_name">Tên thương hiệu</label>
+                    <input id="brand_name" name="brand_name" value="{{ site_content_form.brand_name }}">
+                </div>
+                <div class="form-field">
+                    <label for="browser_title">Tiêu đề trình duyệt</label>
+                    <input id="browser_title" name="browser_title" value="{{ site_content_form.browser_title }}">
+                </div>
+                <div class="form-field">
+                    <label for="support_email">Email hỗ trợ</label>
+                    <input id="support_email" name="support_email" type="email" value="{{ site_content_form.support_email }}">
+                </div>
+                <div class="form-field">
+                    <label for="support_phone">Số điện thoại hỗ trợ</label>
+                    <input id="support_phone" name="support_phone" value="{{ site_content_form.support_phone }}">
+                </div>
+                <div class="form-field form-field-wide">
+                    <label for="footer_brand_line">Thông điệp chân trang</label>
+                    <input id="footer_brand_line" name="footer_brand_line" value="{{ site_content_form.footer_brand_line }}">
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card admin-site-section">
+            <div class="admin-panel-heading">
+                <div>
+                    <span class="card-label">Tài nguyên hình ảnh</span>
+                    <h3>Logo và ảnh hero trang chủ</h3>
+                </div>
+            </div>
+
+            <div class="admin-media-grid">
+                <article class="admin-media-card">
+                    <div class="admin-media-preview-wrap logo-preview">
+                        <img
+                            src="{{ url_for('static', filename=media_assets.logo.path) }}"
+                            alt="Logo website"
+                            class="admin-media-preview admin-media-preview-logo"
+                        >
+                    </div>
+                    <div class="admin-media-body">
+                        <div>
+                            <span class="card-label">Logo website</span>
+                            <h4>Ảnh nhận diện thương hiệu</h4>
+                            <p class="meta-line">
+                                Định dạng hiện tại: {{ media_assets.logo.format|upper if media_assets.logo.format else 'N/A' }}
+                                {% if media_assets.logo.has_custom %} · Ảnh tùy chỉnh{% else %} · Ảnh mặc định{% endif %}
+                            </p>
+                        </div>
+
+                        <div class="admin-upload-row">
+                            <div class="form-field">
+                                <label for="logo_image">Tải lên logo mới</label>
+                                <input id="logo_image" name="logo_image" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,.gif">
+                            </div>
+                            <div class="form-field">
+                                <label for="logo_image_format">Định dạng đầu ra</label>
+                                <select id="logo_image_format" name="logo_image_format">
+                                    <option value="png">PNG</option>
+                                    <option value="jpg">JPG</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="check-line admin-remove-check">
+                            <input type="checkbox" name="remove_logo_image">
+                            <span>Xóa logo tùy chỉnh hiện tại</span>
+                        </label>
+                    </div>
+                </article>
+
+                <article class="admin-media-card">
+                    <div class="admin-media-preview-wrap hero-preview">
+                        <img
+                            src="{{ url_for('static', filename=media_assets.hero.path) }}"
+                            alt="Ảnh hero trang chủ"
+                            class="admin-media-preview admin-media-preview-hero"
+                        >
+                    </div>
+                    <div class="admin-media-body">
+                        <div>
+                            <span class="card-label">Ảnh hero trang chủ</span>
+                            <h4>Ảnh giới thiệu chính</h4>
+                            <p class="meta-line">
+                                Định dạng hiện tại: {{ media_assets.hero.format|upper if media_assets.hero.format else 'N/A' }}
+                                {% if media_assets.hero.has_custom %} · Ảnh tùy chỉnh{% else %} · Ảnh mặc định{% endif %}
+                            </p>
+                        </div>
+
+                        <div class="admin-upload-row">
+                            <div class="form-field">
+                                <label for="hero_image">Tải lên ảnh hero mới</label>
+                                <input id="hero_image" name="hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,.gif">
+                            </div>
+                            <div class="form-field">
+                                <label for="hero_image_format">Định dạng đầu ra</label>
+                                <select id="hero_image_format" name="hero_image_format">
+                                    <option value="png">PNG</option>
+                                    <option value="jpg">JPG</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="check-line admin-remove-check">
+                            <input type="checkbox" name="remove_hero_image">
+                            <span>Xóa ảnh hero tùy chỉnh hiện tại</span>
+                        </label>
+                    </div>
+                </article>
+            </div>
+
+            <div class="upload-note">
+                {% if image_conversion_available %}
+                    Hệ thống có thể chuyển đổi ảnh tải lên về định dạng JPG hoặc PNG.
+                {% else %}
+                    Hệ thống hiện nhận trực tiếp JPG/PNG. Muốn chuyển đổi từ WEBP, BMP hoặc GIF cần cài đặt Pillow.
+                {% endif %}
+            </div>
+        </section>
+
+        <div class="admin-site-savebar">
+            <span>Thay đổi sẽ được áp dụng cho toàn bộ giao diện sau khi lưu.</span>
+            <button class="button primary" type="submit">Lưu thông tin website</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

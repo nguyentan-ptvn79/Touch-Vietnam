@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% for row in dashboard_layout %}
+    <section class="{{ row.section_class }}">
+        {% if row.heading and row.heading.title_key != 'dashboard_title' %}
+            <div class="section-heading">
+                <span class="eyebrow">{{ t(row.heading.eyebrow_key) }}</span>
+                <h2>{{ t(row.heading.title_key) }}</h2>
+            </div>
+        {% endif %}
+        <div class="{{ row.container_class }}">
+            {% for block in row.blocks %}
+                {% include block.template %}
+            {% endfor %}
+        </div>
+    </section>
+{% endfor %}
+{% endblock %}

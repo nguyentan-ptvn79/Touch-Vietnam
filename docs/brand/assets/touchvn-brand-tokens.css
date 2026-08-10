@@ -1,0 +1,22 @@
+:root {
+  --touch-color-green: #0b5d45;
+  --touch-color-green-dark: #074232;
+  --touch-color-green-soft: #e7f3eb;
+  --touch-color-gold: #b7831f;
+  --touch-color-gold-light: #f4c45d;
+  --touch-color-ink: #162b22;
+  --touch-color-muted: #66746d;
+  --touch-color-canvas: #f5f7f4;
+  --touch-color-surface: #ffffff;
+  --touch-color-border: #dce5de;
+  --touch-color-danger: #b5463b;
+  --touch-font-display: "Playfair Display", Georgia, serif;
+  --touch-font-body: Inter, "Segoe UI", Arial, sans-serif;
+  --touch-radius-sm: 14px;
+  --touch-radius-md: 18px;
+  --touch-radius-lg: 24px;
+  --touch-radius-xl: 30px;
+  --touch-shadow: 0 10px 24px rgba(18, 42, 32, 0.07);
+  --touch-motion-fast: 150ms;
+  --touch-motion-standard: 240ms;
+}

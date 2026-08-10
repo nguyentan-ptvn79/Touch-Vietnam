@@ -1,0 +1,29 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="60" x2="1120" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF6D9"/>
+      <stop offset="0.48" stop-color="#E9F8FF"/>
+      <stop offset="1" stop-color="#F5FFE8"/>
+    </linearGradient>
+    <linearGradient id="sunrise" x1="300" y1="120" x2="950" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8D05A"/>
+      <stop offset="1" stop-color="#F2A23A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" rx="36" fill="url(#bg)"/>
+  <circle cx="930" cy="170" r="84" fill="#FFF1B5" opacity="0.95"/>
+  <path d="M0 470C146 440 218 370 328 370C465 370 544 482 660 482C804 482 860 346 1033 346C1135 346 1207 390 1280 428V720H0V470Z" fill="#CDEDB4"/>
+  <path d="M0 514C152 480 262 430 382 430C505 430 573 548 707 548C846 548 948 422 1115 422C1175 422 1229 437 1280 462V720H0V514Z" fill="#A7D4F0"/>
+  <path d="M44 554L190 356L342 554H44Z" fill="#5B8E5A"/>
+  <path d="M255 554L424 276L615 554H255Z" fill="#3E7550"/>
+  <path d="M1002 544C1050 494 1108 468 1177 468C1235 468 1267 489 1280 502V720H961C958 668 963 609 1002 544Z" fill="#F7E2A0"/>
+  <path d="M720 547C736 522 766 505 798 505C851 505 891 549 891 603V720H697C693 652 692 590 720 547Z" fill="#E7C15B"/>
+  <rect x="734" y="563" width="19" height="157" rx="9.5" fill="#8C6D29"/>
+  <rect x="778" y="531" width="19" height="189" rx="9.5" fill="#8C6D29"/>
+  <rect x="821" y="576" width="19" height="144" rx="9.5" fill="#8C6D29"/>
+  <path d="M948 331C986 317 1026 313 1068 313C1106 313 1141 323 1174 341C1140 357 1106 365 1068 365C1028 365 986 355 948 331Z" fill="#8DC5E5" opacity="0.8"/>
+  <path d="M104 612C196 586 267 561 347 561C452 561 533 617 635 617C738 617 788 577 882 577C982 577 1047 620 1138 620C1186 620 1232 612 1280 594V720H0V650C36 640 69 626 104 612Z" fill="#2B6E9A"/>
+  <text x="86" y="114" fill="#B88716" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="32" font-weight="800" letter-spacing="4">KHÁM PHÁ VIỆT NAM</text>
+  <text x="86" y="176" fill="#183153" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="72" font-weight="900">Điểm đến đẹp, hành trình rõ,</text>
+  <text x="86" y="246" fill="#183153" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="72" font-weight="900">trải nghiệm liền mạch.</text>
+</svg>

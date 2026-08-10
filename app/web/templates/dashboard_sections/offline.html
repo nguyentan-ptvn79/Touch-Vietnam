@@ -1,0 +1,13 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_offline_label') }}</span>
+    <h3>{{ t('dashboard_offline_title') }}</h3>
+    <div class="stack-list">
+        {% for pack in offline_map_packs %}
+            <div class="stack-row">
+                <strong>{{ pack.name }}</strong>
+                <span>{{ region_labels.get(pack.region, pack.region) }}</span>
+                <p>{{ pack.coverage }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</article>

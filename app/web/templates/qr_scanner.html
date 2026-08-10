@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section-block">
+    <div class="section-heading">
+        <span class="eyebrow">{{ t('qr_scanner_eyebrow') }}</span>
+        <h1>{{ t('qr_scanner_title') }}</h1>
+        <p>{{ t('qr_scanner_intro') }}</p>
+    </div>
+</section>
+
+<section
+    class="two-column detail-layout"
+    data-qr-scanner
+    data-qr-resolve-endpoint="{{ url_for('qr_resolve_api') }}"
+    data-idle-text="{{ t('qr_scan_status_idle') }}"
+    data-active-text="{{ t('qr_scan_status_active') }}"
+    data-error-text="{{ t('qr_scan_status_error') }}"
+    data-success-text="{{ t('qr_scan_status_found') }}"
+    data-result-label="{{ t('qr_result_label') }}"
+    data-open-detail-label="{{ t('qr_open_detail') }}"
+    data-open-map-label="{{ t('places_map_open') }}"
+>
+    <article class="glass-card qr-scanner-card">
+        <span class="card-label">{{ t('qr_card_label') }}</span>
+        <h3>{{ t('qr_scanner_camera_title') }}</h3>
+        <div class="qr-video-shell">
+            <video class="qr-video" data-qr-video playsinline muted></video>
+            <div class="qr-overlay" aria-hidden="true"></div>
+        </div>
+        <p class="chat-status" data-qr-status>{{ t('qr_scan_status_idle') }}</p>
+        <div class="inline-actions">
+            <button class="button primary" type="button" data-qr-start>{{ t('qr_open_camera') }}</button>
+            <button class="button secondary" type="button" data-qr-stop>{{ t('qr_stop_camera') }}</button>
+        </div>
+        <form class="auth-form qr-manual-form" data-qr-manual-form>
+            <div class="form-field">
+                <label for="qr-code-manual">{{ t('qr_manual_label') }}</label>
+                <input id="qr-code-manual" data-qr-manual-input placeholder="{{ t('qr_manual_placeholder') }}">
+            </div>
+            <button class="button secondary" type="submit">{{ t('qr_manual_submit') }}</button>
+        </form>
+    </article>
+
+    <article class="glass-card qr-result-card" data-qr-result>
+        <span class="card-label">{{ t('qr_result_label') }}</span>
+        <h3>{{ t('qr_result_title') }}</h3>
+        <p>{{ t('qr_result_empty') }}</p>
+    </article>
+</section>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/qr-scanner.js') }}?v={{ app_meta.app_version }}"></script>
+{% endblock %}

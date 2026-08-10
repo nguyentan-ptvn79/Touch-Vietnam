@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-page">
+    <header class="page-intro">
+        <span class="eyebrow">{{ t('places_eyebrow') }}</span>
+        <h1>{{ t('places_title') }}</h1>
+        <p>{{ t('places_intro') }}</p>
+    </header>
+
+    <form class="filter-panel places-filter" method="get">
+        <div class="form-field">
+            <label for="region">{{ t('filter_region') }}</label>
+            <select id="region" name="region">
+                <option value="">{{ t('filter_all') }}</option>
+                {% for region in regions %}
+                    <option value="{{ region.code }}" {{ 'selected' if selected_region == region.code else '' }}>{{ region.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="province">{{ t('filter_province') }}</label>
+            <select id="province" name="province">
+                <option value="">{{ t('filter_all') }}</option>
+                {% for province in provinces %}
+                    <option value="{{ province.name }}" {{ 'selected' if selected_province == province.name else '' }}>{{ province.name }} ({{ province.count }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="category">{{ t('filter_category') }}</label>
+            <select id="category" name="category">
+                <option value="">{{ t('filter_all') }}</option>
+                {% for category in categories %}
+                    <option value="{{ category.code }}" {{ 'selected' if selected_category == category.code else '' }}>{{ category.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-field grow">
+            <label for="search">{{ t('filter_keyword') }}</label>
+            <input id="search" type="text" name="search" value="{{ keyword }}" placeholder="{{ t('filter_placeholder') }}">
+        </div>
+        <button class="button primary" type="submit">{{ t('filter_submit') }}</button>
+    </form>
+
+    {% if place_cards %}
+        <div class="places-results-meta">
+            <p>{{ t('places_results_count', count=pagination.total_items) }}</p>
+        </div>
+
+        <section class="place-grid product-place-grid">
+            {% for card in place_cards %}
+                {% set place = card.place %}
+                <article class="place-card product-place-card">
+                    <div class="place-art">
+                        <img
+                            src="{{ url_for('static', filename=place_image_asset(place.id)) }}"
+                            alt="{{ place.name }}"
+                            class="place-art-image"
+                            loading="lazy"
+                        >
+                        <a class="place-card-qr" href="{{ card.detail_url }}" aria-label="{{ t('qr_place_title') }}">
+                            <img src="{{ card.qr_image_url }}" alt="{{ t('qr_image_alt', place=place.name) }}" loading="lazy">
+                        </a>
+                        <span class="destination-badge">{{ place.must_go_score }}/100</span>
+                    </div>
+
+                    <div class="place-body">
+                        <div class="place-header">
+                            <div>
+                                <h3>{{ place.name }}</h3>
+                                <p class="destination-location">{{ place.province }}</p>
+                            </div>
+                            <span class="score">{{ place.rating }}</span>
+                        </div>
+
+                        <div class="tag-row">
+                            {% for category in place.categories %}
+                                <span class="tag">{{ category_labels.get(category, category) }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="budget-grid place-summary-grid">
+                            <div>
+                                <span>{{ t('ticket_price') }}</span>
+                                <strong>{{ place.ticket_price|currency }}</strong>
+                            </div>
+                            <div>
+                                <span>{{ t('places_avg_spend') }}</span>
+                                <strong>{{ place.avg_spend|currency }}</strong>
+                            </div>
+                        </div>
+
+                        {% if card.weather %}
+                            <div class="place-weather">
+                                <div class="place-weather-top">
+                                    <strong>{{ card.weather.temperature_c }}°C</strong>
+                                    <span>{{ card.weather.condition }}</span>
+                                </div>
+                                <p>{{ card.weather.advice }}</p>
+                            </div>
+                        {% endif %}
+
+                        <div class="transport-list">
+                            {% for mode in place.transport_modes %}
+                                <span class="transport-chip">{{ t('transport_' ~ mode) }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="place-tool-chips" aria-label="{{ t('place_tools_eyebrow') }}">
+                            <span>{{ t('places_map_title') }}</span>
+                            <span>{{ t('place_tools_offline_short') }}</span>
+                            <span>{{ t('place_tools_ar_short') }}</span>
+                        </div>
+
+                        <div class="inline-actions place-card-actions">
+                            <a class="button secondary" href="{{ card.detail_url }}">{{ t('places_view_detail') }}</a>
+                            <a class="button secondary" href="{{ card.map_view_url }}" target="_blank" rel="noopener noreferrer">{{ t('places_map_open') }}</a>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+
+        {% if pagination.total_pages > 1 %}
+            <nav class="pagination" aria-label="{{ t('pagination_aria') }}">
+                {% if pagination.page > 1 %}
+                    <a
+                        class="pagination-link"
+                        href="{{ url_for('places', region=selected_region or None, province=selected_province or None, category=selected_category or None, search=keyword or None, page=pagination.page - 1) }}"
+                    >{{ t('pagination_previous') }}</a>
+                {% else %}
+                    <span class="pagination-link disabled" aria-disabled="true">{{ t('pagination_previous') }}</span>
+                {% endif %}
+
+                <span class="pagination-status">
+                    {{ t('pagination_page', page=pagination.page, total=pagination.total_pages) }}
+                </span>
+
+                {% if pagination.page < pagination.total_pages %}
+                    <a
+                        class="pagination-link"
+                        href="{{ url_for('places', region=selected_region or None, province=selected_province or None, category=selected_category or None, search=keyword or None, page=pagination.page + 1) }}"
+                    >{{ t('pagination_next') }}</a>
+                {% else %}
+                    <span class="pagination-link disabled" aria-disabled="true">{{ t('pagination_next') }}</span>
+                {% endif %}
+            </nav>
+        {% endif %}
+    {% else %}
+        <div class="simple-card-grid">
+            <article class="simple-card simple-card-wide">
+                <span class="eyebrow">{{ t('places_empty_title') }}</span>
+                <h2>{{ t('places_empty_heading') }}</h2>
+                <p>{{ t('places_empty_body') }}</p>
+            </article>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% for recommendation in recommendations %}
+    <article class="feature-card">
+        <span class="priority {{ recommendation.priority }}">{{ t('priority_' ~ recommendation.priority) }}</span>
+        <h3>{{ recommendation.title }}</h3>
+    </article>
+{% endfor %}

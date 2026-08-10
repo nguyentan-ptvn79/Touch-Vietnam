@@ -1,0 +1,26 @@
+<article class="glass-card">
+    <span class="card-label">{{ t('dashboard_bookings_label') }}</span>
+    <h3>{{ t('dashboard_bookings_title') }}</h3>
+    {% if recent_bookings %}
+        <div class="stack-list compact-list">
+            {% for booking in recent_bookings %}
+                <div class="stack-row">
+                    <div>
+                        <strong>{{ booking.booking_reference }}</strong>
+                        <p>{{ booking.provider }} &bull; {{ booking.origin }} &rarr; {{ booking.destination }}</p>
+                        <time class="meta-line" datetime="{{ booking.created_at|iso_datetime }}" data-relative-time>{{ booking.created_at|datetime_local }}</time>
+                    </div>
+                    <div class="booking-meta">
+                        <span class="pill">{{ booking.status_label }}</span>
+                        <strong>{{ booking.amount|currency }}</strong>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>{{ t('dashboard_bookings_empty') }}</p>
+    {% endif %}
+    <div class="inline-actions">
+        <a class="button secondary" href="{{ url_for('tickets') }}">{{ t('dashboard_open_tickets') }}</a>
+    </div>
+</article>
