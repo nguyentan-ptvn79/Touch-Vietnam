@@ -21,12 +21,6 @@ jobs:
 
     env:
       PYTHONDONTWRITEBYTECODE: "1"
-      APP_ENV: testing
-      APP_SECRET_KEY: touch-vn-ci-secret-key-with-at-least-48-characters
-      ADMIN_EMAILS: admin@touchvn.com
-      SEED_DEMO_USERS: "true"
-      DEMO_ADMIN_EMAIL: admin@touchvn.com
-      DEMO_ADMIN_PASSWORD: TouchVN-ci-test-password
 
     steps:
       - name: Check out repository
