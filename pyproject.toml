@@ -15,10 +15,8 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # FastAPI uses Query/Depends calls as part of its public route declaration API.
 "app/api/main.py" = ["B008"]
-# Each download is isolated so one broken source does not abort the whole batch.
-"scripts/sync_real_place_images.py" = ["BLE001", "E402"]
 # Tests set environment variables before importing the application by design.
 "tests/test_acceptance.py" = ["E402"]
 
 [tool.ruff.format]
-line-ending = "cr-lf"
+line-ending = "lf"

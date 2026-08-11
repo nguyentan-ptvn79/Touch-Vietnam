@@ -13,6 +13,12 @@ __pycache__/
 .idea/
 archive/
 release/
+docs/
+output/
+scripts/
+package_release.ps1
+requirements-security.txt
+sbom.cdx.json
 data/*.db
 docs/~$*
 docs/*_working.docx

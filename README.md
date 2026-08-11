@@ -12,7 +12,7 @@
 - Smart fallback giúp chức năng chính tiếp tục hoạt động khi dịch vụ AI hoặc API ngoài gián đoạn.
 - Dashboard cho người dùng và quản trị viên, bao gồm analytics, nội dung và trạng thái tích hợp.
 - REST API FastAPI dùng chung lớp nghiệp vụ với ứng dụng Flask.
-- Baseline bảo mật theo OWASP, có SAST, dependency audit, DAST và stress smoke.
+- Các kiểm soát bảo mật chính gồm CSRF, CSP, phân quyền, rate limit, validation và audit log.
 - Bộ nghiệm thu hiện tại gồm **22 bài kiểm thử**, được chạy tự động trên GitHub Actions.
 
 ## Kiến trúc và công nghệ
@@ -24,8 +24,8 @@
 | Lớp nghiệp vụ | Python service modules dùng chung |
 | Dữ liệu | SQLite; thiết kế sẵn hướng mở rộng PostgreSQL/PostGIS |
 | AI | OpenAI Responses API, có fallback nội bộ |
-| Vận hành | Waitress, Uvicorn, PowerShell quality gates |
-| Kiểm thử | `unittest`, GitHub Actions, SAST, DAST, stress smoke |
+| Vận hành | Waitress, Uvicorn |
+| Kiểm thử | `unittest`, GitHub Actions |
 
 Luồng chính của hệ thống:
 
@@ -95,33 +95,11 @@ Chạy bộ acceptance tests:
 .\.venv\Scripts\python.exe -m unittest -q tests.test_acceptance
 ```
 
-Chạy quality gate đầy đủ trên Windows:
-
-```powershell
-.\scripts\run_quality_checks.ps1
-```
-
-Chạy thêm DAST và stress smoke:
-
-```powershell
-.\scripts\run_quality_checks.ps1 -IncludeDynamicSecurity
-```
-
 Dependency có thể được cài đặt tái lập bằng lockfile có hash:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install --require-hashes -r requirements.lock
 ```
-
-## Tài liệu đồ án
-
-- [Báo cáo đồ án hoàn chỉnh (DOCX)](docs/TouchVN_BaoCaoDoAn_24730064_HOAN_CHINH.docx)
-- [Slide báo cáo đồ án (PPTX)](docs/TouchVN_BaoCaoDoAn_24730064_HOAN_CHINH.pptx)
-- [Báo cáo đồ án (PDF)](output/pdf/TouchVN_BaoCaoDoAn_24730064_HOAN_CHINH.pdf)
-- [Phân tích và thiết kế](docs/phan-tich-thiet-ke.md)
-- [Đối chiếu yêu cầu](docs/requirements-audit.md)
-- [Bảng nghiệm thu](docs/bang-nghiem-thu-khoa-luan.md)
-- [Nguồn hình ảnh](docs/image-sources.md)
 
 ## Cấu trúc repository
 
@@ -130,22 +108,9 @@ app/
   api/              REST API FastAPI
   shared/           Dữ liệu, nghiệp vụ, bảo mật và tích hợp
   web/              Flask app, templates và static assets
-docs/               Báo cáo, thiết kế và minh chứng
-output/pdf/         Các tài liệu PDF hoàn chỉnh
-scripts/            Quality gates và công cụ bảo trì
 tests/              Bộ acceptance tests
 run_web.py          Điểm chạy website
 run_api.py          Điểm chạy REST API
 ```
 
-Các thư mục runtime như `.venv`, `data/*.db`, log, release ZIP và cấu hình bí mật `.env` không được đưa vào repository.
-
-## Đóng gói
-
-Sau khi hoàn tất kiểm thử:
-
-```powershell
-.\package_release.ps1 -Version 1.1.0
-```
-
-Gói ZIP được tạo trong `release/` và tự động loại môi trường ảo, database runtime, log, cache, tài khoản demo và `.env`.
+Repository chỉ chứa mã nguồn, assets cần thiết, dependency, cấu hình mẫu, tests và CI. Báo cáo đồ án, PDF/PPTX/DOCX, database runtime, log, release ZIP, môi trường ảo và cấu hình bí mật `.env` được giữ ngoài Git.
