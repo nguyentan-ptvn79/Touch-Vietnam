@@ -12,6 +12,35 @@
     --ui-shadow: 0 10px 24px rgba(18, 42, 32, 0.07);
 }
 
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #ffffff;
+    background: var(--ui-green-dark);
+    transform: translateY(-160%);
+    transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid #d49a2a;
+    outline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -25,7 +54,7 @@ body {
     min-width: 320px;
     overflow-x: clip;
     color: var(--ui-ink);
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     background: var(--ui-canvas);
 }
 
@@ -90,7 +119,7 @@ a {
 
 .brand-mark {
     color: var(--ui-green-dark);
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 1.05rem;
     line-height: 1.1;
     letter-spacing: 0;
@@ -143,7 +172,7 @@ a {
 }
 
 .session-action-form button {
-    font-family: inherit;
+    font-family: "Noto Sans KR", sans-serif;
     cursor: pointer;
 }
 
@@ -343,7 +372,7 @@ a {
     max-width: 11ch;
     margin: 0;
     color: #ffffff;
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(2.65rem, 5.5vw, 4.7rem);
     line-height: 1.04;
     letter-spacing: 0;
@@ -455,7 +484,7 @@ a {
 .content-page h1 {
     margin: 0;
     color: var(--ui-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(1.7rem, 2.4vw, 2.35rem);
     line-height: 1.18;
     letter-spacing: 0;
@@ -858,7 +887,7 @@ a {
 
 .ticket-strip-title strong {
     color: var(--ui-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 1.55rem;
 }
 
@@ -1087,7 +1116,7 @@ textarea:focus,
 .auth-card h1 {
     margin: 8px 0 24px;
     color: var(--ui-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 2rem;
     letter-spacing: 0;
 }
@@ -1638,7 +1667,7 @@ meter {
 .admin-dashboard-page .admin-analytics-card .analytics-kpis .analytics-kpi > strong {
     grid-area: value;
     color: #075f45;
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(1.75rem, 2.6vw, 2.3rem);
     font-variant-numeric: tabular-nums;
     line-height: 1;
@@ -1919,7 +1948,7 @@ meter {
 .admin-dashboard-page > .summary-grid .metric-card > strong {
     grid-area: value;
     color: #086647;
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(1.8rem, 2.5vw, 2.35rem);
     font-variant-numeric: tabular-nums;
     line-height: 1;

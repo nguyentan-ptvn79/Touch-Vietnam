@@ -8,13 +8,14 @@
     <title>{{ title or t('app_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/{{ site_media.logo.format or 'svg' }}" href="{{ url_for('static', filename=site_media.logo.path) }}?v={{ app_meta.app_version }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ app_meta.app_version }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style-synced.css') }}?v={{ app_meta.app_version }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style-production.css') }}?v={{ app_meta.app_version }}">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">{{ t('skip_to_content') }}</a>
     <div class="site-backdrop" aria-hidden="true"></div>
     <div class="page-shell">
         <header class="site-header">
@@ -97,7 +98,7 @@
             {% endif %}
         {% endwith %}
 
-        <main class="content">
+        <main class="content" id="main-content" tabindex="-1">
             {% block content %}{% endblock %}
         </main>
 

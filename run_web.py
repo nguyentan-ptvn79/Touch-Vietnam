@@ -10,13 +10,11 @@ ROOT = Path(__file__).resolve().parent
 
 load_env_file(ROOT / ".env")
 sys.path = [str(ROOT)] + [
-    item
-    for item in sys.path
-    if item and str(Path(item).resolve()) != str(ROOT)
+    item for item in sys.path if item and str(Path(item).resolve()) != str(ROOT)
 ]
 
-from app.web.app import create_app
-from app.shared.settings import get_settings
+from app.shared.settings import get_settings  # noqa: E402 - load environment before app imports
+from app.web.app import create_app  # noqa: E402
 
 try:
     from waitress import serve

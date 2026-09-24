@@ -21,7 +21,7 @@ body {
     margin: 0;
     min-height: 100vh;
     color: var(--ink);
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     background:
         radial-gradient(circle at top left, rgba(212, 175, 55, 0.18), transparent 28%),
         radial-gradient(circle at 88% 12%, rgba(0, 107, 63, 0.12), transparent 24%),
@@ -86,7 +86,7 @@ a {
 }
 
 .brand-mark {
-    font-family: "Cinzel", "Times New Roman", serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 1.9rem;
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -94,7 +94,7 @@ a {
 }
 
 .brand-subtitle {
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 1.22rem;
     font-weight: 800;
     letter-spacing: -0.01em;
@@ -110,7 +110,7 @@ a {
 .site-nav a {
     padding: 10px 16px;
     border-radius: 999px;
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 700;
     transition: 0.25s ease;
 }
@@ -144,7 +144,7 @@ a {
 .section-heading h1,
 .section-heading h2 {
     margin: 10px 0 16px;
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     line-height: 1.08;
 }
 
@@ -651,7 +651,7 @@ a {
     border-radius: 16px;
     padding: 12px 14px;
     font: inherit;
-    font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     background: rgba(255, 255, 255, 0.85);
 }
 

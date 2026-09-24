@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parent
 
 load_env_file(ROOT / ".env")
 
+
 def add_if_accessible(path: Path) -> None:
     if not path.exists():
         return
@@ -26,8 +27,7 @@ add_if_accessible(ROOT / ".python_packages")
 add_if_accessible(Path(site.getusersitepackages()))
 sys.path.insert(0, str(ROOT))
 
-import uvicorn
-
+import uvicorn  # noqa: E402 - bootstrap dependency paths before importing the server
 
 if __name__ == "__main__":
     uvicorn.run(

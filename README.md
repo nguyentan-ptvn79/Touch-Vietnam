@@ -153,7 +153,9 @@ Chạy toàn bộ acceptance tests:
 .\.venv\Scripts\python.exe -m unittest -q tests.test_acceptance
 ```
 
-Bộ hiện tại gồm **22 tests** cho API, phân quyền, CSRF, đa ngôn ngữ, AI fallback, planner, dashboard, offline pack và các luồng web chính. GitHub Actions tự động biên dịch nguồn và chạy lại bộ test trên mỗi lần push hoặc pull request vào `main`.
+Bộ hiện tại gồm **32 tests** cho API, đăng ký và thu hồi token, phân quyền, CSRF, đa ngôn ngữ, AI fallback, planner, dashboard, trang quản trị, tài nguyên tĩnh, QR và offline pack. Toàn bộ test dùng thư mục dữ liệu tạm và giả lập mất mạng cho weather/nearby; không sử dụng database hay API key thật. Có thể đặt `APP_DATA_DIR` để đổi thư mục database và log khi chạy ứng dụng.
+
+GitHub Actions kiểm tra trên Python 3.11 và 3.12: biên dịch Python, kiểm tra dependency, cú pháp JavaScript và chạy toàn bộ test qua `unittest discover` trên mỗi lần push hoặc pull request vào `main`.
 
 ## Cấu trúc repository
 

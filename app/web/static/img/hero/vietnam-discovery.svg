@@ -23,7 +23,7 @@
   <rect x="821" y="576" width="19" height="144" rx="9.5" fill="#8C6D29"/>
   <path d="M948 331C986 317 1026 313 1068 313C1106 313 1141 323 1174 341C1140 357 1106 365 1068 365C1028 365 986 355 948 331Z" fill="#8DC5E5" opacity="0.8"/>
   <path d="M104 612C196 586 267 561 347 561C452 561 533 617 635 617C738 617 788 577 882 577C982 577 1047 620 1138 620C1186 620 1232 612 1280 594V720H0V650C36 640 69 626 104 612Z" fill="#2B6E9A"/>
-  <text x="86" y="114" fill="#B88716" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="32" font-weight="800" letter-spacing="4">KHÁM PHÁ VIỆT NAM</text>
-  <text x="86" y="176" fill="#183153" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="72" font-weight="900">Điểm đến đẹp, hành trình rõ,</text>
-  <text x="86" y="246" fill="#183153" font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="72" font-weight="900">trải nghiệm liền mạch.</text>
+  <text x="86" y="114" fill="#B88716" font-family="Noto Sans KR, sans-serif" font-size="32" font-weight="800" letter-spacing="4">KHÁM PHÁ VIỆT NAM</text>
+  <text x="86" y="176" fill="#183153" font-family="Noto Sans KR, sans-serif" font-size="72" font-weight="900">Điểm đến đẹp, hành trình rõ,</text>
+  <text x="86" y="246" fill="#183153" font-family="Noto Sans KR, sans-serif" font-size="72" font-weight="900">trải nghiệm liền mạch.</text>
 </svg>

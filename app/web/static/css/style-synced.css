@@ -20,13 +20,13 @@
     --radius-lg: 24px;
     --radius-md: 18px;
     --radius-sm: 14px;
-    --font-display: "Playfair Display", Georgia, serif;
-    --font-body: "Inter", "Segoe UI", sans-serif;
+    --font-display: "Noto Sans KR", sans-serif;
+    --font-body: "Noto Sans KR", sans-serif;
 }
 
 body {
     color: var(--brand-ink);
-    font-family: var(--font-body);
+    font-family: "Noto Sans KR", sans-serif;
     background:
         linear-gradient(135deg, rgba(255, 214, 165, 0.58) 0%, rgba(249, 249, 247, 0.96) 34%, rgba(123, 223, 242, 0.22) 72%, rgba(155, 229, 100, 0.2) 100%);
 }
@@ -130,7 +130,7 @@ body {
 }
 
 .brand-mark {
-    font-family: var(--font-display);
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(2rem, 2.6vw, 3rem);
     line-height: 0.9;
     letter-spacing: -0.04em;
@@ -348,7 +348,7 @@ body {
     display: grid;
     gap: 2px;
     margin: 0;
-    font-family: var(--font-display);
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(3.5rem, 5vw, 5.35rem);
     line-height: 0.92;
     letter-spacing: -0.055em;
@@ -1378,7 +1378,7 @@ body {
     margin: 0;
     max-width: 740px;
     color: var(--brand-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(2.8rem, 5.3vw, 5.35rem);
     line-height: 1.08;
     letter-spacing: -0.04em;
@@ -1510,7 +1510,7 @@ body {
 
 .about-stats dt {
     color: var(--brand-green);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(1.7rem, 2.7vw, 2.45rem);
     font-weight: 800;
     line-height: 1;
@@ -1578,7 +1578,7 @@ body {
     top: 42px;
     left: 44px;
     color: rgba(255, 255, 255, 0.2);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 4rem;
     font-weight: 800;
     line-height: 1;
@@ -1592,7 +1592,7 @@ body {
     margin: 0;
     max-width: 460px;
     color: #fff;
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(2rem, 3.6vw, 3.25rem);
     line-height: 1.1;
     letter-spacing: -0.025em;
@@ -1617,7 +1617,7 @@ body {
 .about-cta h2 {
     margin: 0;
     color: var(--brand-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(2.4rem, 4.5vw, 4.25rem);
     line-height: 1.1;
     letter-spacing: -0.035em;
@@ -1646,14 +1646,14 @@ body {
 
 .about-story-highlight span {
     color: var(--brand-gold-deep);
-    font-family: Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 3rem;
     line-height: 0.8;
 }
 
 .about-story-highlight strong {
     color: var(--brand-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 1.18rem;
     line-height: 1.55;
 }
@@ -1743,7 +1743,7 @@ body {
 .about-value-card h3 {
     margin: 0;
     color: var(--brand-ink);
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Noto Sans KR", sans-serif;
     font-size: clamp(1.45rem, 2vw, 1.85rem);
     line-height: 1.15;
 }

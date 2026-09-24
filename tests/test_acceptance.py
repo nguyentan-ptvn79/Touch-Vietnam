@@ -1,30 +1,49 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import tempfile
 import time
 import unittest
 from dataclasses import replace
+from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
+from urllib.error import URLError
 
-os.environ.setdefault("APP_ENV", "testing")
-os.environ.setdefault("APP_SECRET_KEY", "touch-vn-test-secret-key-with-at-least-48-characters")
-os.environ.setdefault("ADMIN_EMAILS", "admin@touchvn.com")
-os.environ.setdefault("SEED_DEMO_USERS", "true")
-os.environ.setdefault("DEMO_ADMIN_EMAIL", "admin@touchvn.com")
+TEST_DATA_DIR = tempfile.TemporaryDirectory(prefix="touch-vn-tests-")
+TEST_ENV = patch.dict(
+    os.environ,
+    {
+        "APP_ENV": "testing",
+        "APP_DATA_DIR": TEST_DATA_DIR.name,
+        "APP_DEBUG": "false",
+        "ENFORCE_HTTPS": "false",
+        "ENABLE_API_DOCS": "true",
+        "OPENAI_API_KEY": "",
+        "APP_SECRET_KEY": "touch-vn-test-secret-key-with-at-least-48-characters",
+        "ADMIN_EMAILS": "admin@touchvn.com",
+        "SEED_DEMO_USERS": "true",
+        "DEMO_ADMIN_EMAIL": "admin@touchvn.com",
+        "DEMO_ADMIN_PASSWORD": "TouchVN-local-test-password",
+        **{key: "" for key in os.environ if key.startswith("EXTERNAL_")},
+    },
+)
+TEST_ENV.start()
 TEST_ADMIN_PASSWORD = "TouchVN-local-test-password"
-os.environ.setdefault("DEMO_ADMIN_PASSWORD", TEST_ADMIN_PASSWORD)
 
 from fastapi.testclient import TestClient
+from werkzeug.datastructures import FileStorage
 
+from app.api import main as api_main
 from app.api.main import app as api_app
 from app.shared import db
 from app.shared.geography import CURRENT_PROVINCES
 from app.shared.integration_gateways import _validate_external_url
+from app.shared.media_utils import save_uploaded_place_image
 from app.shared.models import ItineraryRequest, TicketOffer
 from app.shared.openai_planner import (
     PlannerNarrative,
@@ -47,6 +66,18 @@ from app.shared.services import (
 from app.shared.settings import get_settings, validate_production_settings
 from app.shared.translations import UI_TEXTS
 from app.web.app import create_app
+
+
+def setUpModule() -> None:
+    network_patch = patch("app.shared.services.urlopen", side_effect=URLError("Offline test"))
+    network_patch.start()
+    unittest.addModuleCleanup(network_patch.stop)
+
+
+def tearDownModule() -> None:
+    logging.shutdown()
+    TEST_ENV.stop()
+    TEST_DATA_DIR.cleanup()
 
 
 class DestinationAcceptanceTests(unittest.TestCase):
@@ -292,6 +323,72 @@ class PlannerAndTicketAcceptanceTests(unittest.TestCase):
 
 
 class DatabaseAndWebAcceptanceTests(unittest.TestCase):
+    def test_public_pages_and_static_assets_in_all_languages(self) -> None:
+        client = self.app.test_client()
+        assets = set()
+        for language in ("vi", "en", "ko"):
+            client.get(f"/set-language/{language}?next=/")
+            for route in (
+                "/",
+                "/places",
+                "/places/sapa",
+                "/ar/places/sapa",
+                "/planner",
+                "/tickets",
+                "/about",
+                "/qr-scanner",
+                "/login",
+                "/register",
+            ):
+                with self.subTest(language=language, route=route):
+                    response = client.get(route)
+                    self.assertEqual(response.status_code, 200)
+                    html = response.get_data(as_text=True)
+                    self.assertIn(f'<html lang="{language}">', html)
+                    assets.update(re.findall(r"(?:src|href)=[\"\'](/static/[^\"\']+)", html))
+        for asset in assets:
+            with self.subTest(asset=asset), client.get(asset) as response:
+                self.assertEqual(response.status_code, 200)
+
+    def test_admin_pages_render_after_login(self) -> None:
+        client = self.app.test_client()
+        client.get("/login")
+        with client.session_transaction() as session:
+            token = session["csrf_token"]
+        response = client.post(
+            "/login",
+            data={
+                "email": "admin@touchvn.com",
+                "password": TEST_ADMIN_PASSWORD,
+                "csrf_token": token,
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        for route in (
+            "/dashboard",
+            "/expenses",
+            "/admin",
+            "/admin/places",
+            "/admin/recommendations",
+            "/admin/site-content",
+            "/admin/integrations",
+            "/admin/analytics/export.csv",
+        ):
+            with (
+                self.subTest(route=route),
+                client.get(route, follow_redirects=True) as response,
+            ):
+                self.assertEqual(response.status_code, 200)
+
+    def test_missing_resources_and_qr_image(self) -> None:
+        client = self.app.test_client()
+        for route in ("/missing", "/places/missing", "/offline-packs/missing.json"):
+            with self.subTest(route=route):
+                self.assertEqual(client.get(route).status_code, 404)
+        response = client.get("/places/sapa/qr.png")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.data.startswith(b"\x89PNG"))
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.temp_dir = tempfile.TemporaryDirectory()
@@ -352,6 +449,25 @@ class DatabaseAndWebAcceptanceTests(unittest.TestCase):
         client.get("/set-language/ko?next=/about")
         korean_page = client.get("/about")
         self.assertIn(b'<html lang="ko">', korean_page.data)
+
+    def test_external_next_url_is_not_followed(self) -> None:
+        response = self.app.test_client().get(
+            "/set-language/en?next=https://attacker.example/phishing"
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers["Location"], "/")
+
+    def test_responsive_and_keyboard_accessibility_contract(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        css = (root / "app/web/static/css/style-production.css").read_text(
+            encoding="utf-8"
+        )
+        template = (root / "app/web/templates/base.html").read_text(encoding="utf-8")
+        self.assertIn("@media (max-width: 640px)", css)
+        self.assertIn("min-width: 320px", css)
+        self.assertIn(":focus-visible", css)
+        self.assertIn('class="skip-link"', template)
+        self.assertIn('id="main-content"', template)
 
     def test_chat_history_and_local_fallback(self) -> None:
         client = self.app.test_client()
@@ -452,6 +568,48 @@ class DatabaseAndWebAcceptanceTests(unittest.TestCase):
 
 
 class ApiAndSecurityAcceptanceTests(unittest.TestCase):
+    def test_test_storage_is_isolated(self) -> None:
+        self.assertEqual(get_settings().data_dir, Path(TEST_DATA_DIR.name).resolve())
+        self.assertEqual(db.DB_PATH.parent, get_settings().data_dir)
+
+    def test_api_registration_authorization_and_token_revocation(self) -> None:
+        with TestClient(api_app) as client:
+            response = client.post(
+                "/api/auth/register",
+                json={
+                    "full_name": "API Test",
+                    "email": "api-test@example.com",
+                    "password": "Api-regression-password-42",
+                },
+            )
+            self.assertEqual(response.status_code, 200, response.text)
+            headers = {"Authorization": f"Bearer {response.json()['access_token']}"}
+            self.assertEqual(client.get("/api/dashboard/summary", headers=headers).status_code, 200)
+            self.assertEqual(
+                client.get("/api/admin/recommendations", headers=headers).status_code, 403
+            )
+            self.assertEqual(client.post("/api/auth/logout", headers=headers).status_code, 200)
+            self.assertEqual(client.get("/api/dashboard/summary", headers=headers).status_code, 401)
+
+    def test_api_catalog_and_fallback_routes(self) -> None:
+        with TestClient(api_app) as client:
+            for route in (
+                "/openapi.json",
+                "/api/regions",
+                "/api/categories",
+                "/api/must-go",
+                "/api/settings/languages",
+                "/api/ar/landmarks",
+                "/api/offline/maps",
+                "/api/places/sapa",
+                "/api/weather/sapa",
+            ):
+                with self.subTest(route=route):
+                    response = client.get(route)
+                    self.assertEqual(response.status_code, 200, response.text)
+            self.assertEqual(client.get("/api/places/missing").status_code, 404)
+            self.assertEqual(client.get("/api/places?lang=invalid").status_code, 422)
+
     def test_api_routes_and_access_control(self) -> None:
         client = TestClient(api_app)
         self.assertEqual(client.get("/api/health").status_code, 200)
@@ -499,6 +657,43 @@ class ApiAndSecurityAcceptanceTests(unittest.TestCase):
         ):
             with self.assertRaises(ValueError, msg=url):
                 _validate_external_url(url)
+
+    def test_authentication_rate_limit_returns_429(self) -> None:
+        api_main.rate_limit_buckets.clear()
+        with TestClient(api_app) as client:
+            for index in range(20):
+                response = client.post(
+                    "/api/auth/register",
+                    json={
+                        "full_name": "Rate Limit Test",
+                        "email": f"rate-limit-{index}@example.com",
+                        "password": "Rate-limit-password-42",
+                    },
+                )
+                self.assertNotEqual(response.status_code, 429)
+            blocked = client.post(
+                "/api/auth/register",
+                json={
+                    "full_name": "Rate Limit Test",
+                    "email": "rate-limit-blocked@example.com",
+                    "password": "Rate-limit-password-42",
+                },
+            )
+        self.assertEqual(blocked.status_code, 429)
+        api_main.rate_limit_buckets.clear()
+
+    def test_invalid_image_upload_is_rejected(self) -> None:
+        fake_image = FileStorage(
+            stream=BytesIO(b"this is not a real image"),
+            filename="malicious.png",
+            content_type="image/png",
+        )
+        with self.assertRaisesRegex(ValueError, "không phải ảnh hợp lệ"):
+            save_uploaded_place_image(
+                place_id="upload-security-test",
+                file=fake_image,
+                output_format="png",
+            )
 
     def test_database_lookup_does_not_interpret_sql_input(self) -> None:
         self.assertIsNone(db.find_user_by_email("' OR 1=1 --"))

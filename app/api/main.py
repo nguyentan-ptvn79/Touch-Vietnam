@@ -492,7 +492,7 @@ def dashboard_summary(
 
 @app.get("/api/admin/recommendations")
 def admin_recommendations(_email: str = Depends(require_admin_email)) -> list[dict[str, str]]:
-    return [item.dict() for item in get_admin_recommendations()]
+    return [item.model_dump() for item in get_admin_recommendations()]
 
 
 @app.get("/api/settings/languages")

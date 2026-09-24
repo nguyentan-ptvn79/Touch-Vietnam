@@ -124,7 +124,8 @@ def validate_production_settings(settings: AppSettings) -> None:
 
 
 def get_settings() -> AppSettings:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    data_dir = Path(os.getenv("APP_DATA_DIR") or DATA_DIR).expanduser().resolve()
+    data_dir.mkdir(parents=True, exist_ok=True)
     environment = os.getenv("APP_ENV", "development").strip().lower()
     debug_default = environment != "production"
     production = environment == "production"
@@ -162,10 +163,10 @@ def get_settings() -> AppSettings:
             "CORS_ALLOWED_ORIGINS",
             "http://127.0.0.1:5000,http://localhost:5000,http://127.0.0.1:8000,http://localhost:8000",
         ),
-        data_dir=DATA_DIR,
-        db_path=DATA_DIR / "travel_app.db",
-        log_path=DATA_DIR / "app.log",
-        security_log_path=DATA_DIR / "security-audit.log",
+        data_dir=data_dir,
+        db_path=data_dir / "travel_app.db",
+        log_path=data_dir / "app.log",
+        security_log_path=data_dir / "security-audit.log",
         public_base_url=os.getenv("APP_PUBLIC_BASE_URL", "").strip().rstrip("/"),
         max_image_pixels=_env_int("MAX_IMAGE_PIXELS", 24_000_000, minimum=1_000_000),
         security_alert_window_seconds=_env_int("SECURITY_ALERT_WINDOW_SECONDS", 300, minimum=60),
